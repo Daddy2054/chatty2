@@ -38,6 +38,7 @@ class SignInPage extends GetView<SignInController> {
         if (kDebugMode) {
           print('...sign up from third party: $loginType...');
         }
+        controller.handlesignIn('google');
       },
       child: Container(
         width: 295.w,

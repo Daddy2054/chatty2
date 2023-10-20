@@ -18,7 +18,7 @@ class FirebaseMassagingHandler {
   FirebaseMassagingHandler._();
   static AndroidNotificationChannel channel_call =
       const AndroidNotificationChannel(
-    'com.example.chatty.call', // id
+    'com.example.chatty2.call', // id
     'chatty_call', // title
     importance: Importance.max,
     enableLights: true,
@@ -27,7 +27,7 @@ class FirebaseMassagingHandler {
   );
   static AndroidNotificationChannel channel_message =
       const AndroidNotificationChannel(
-    'com.example.chatty.message', // id
+    'com.example.chatty2.message', // id
     'chatty_message', // title
     importance: Importance.defaultImportance,
     enableLights: true,
