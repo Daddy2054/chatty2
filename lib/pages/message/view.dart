@@ -6,11 +6,19 @@ import 'index.dart';
 class MessagePage extends GetView<MessageController> {
   const MessagePage({super.key});
 
+// slivers
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Text('i am in the message page'),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            CustomScrollView(
+              slivers: [],
+            ),
+          ],
+        ),
       ),
     );
   }
