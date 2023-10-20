@@ -26,7 +26,10 @@ class SignInPage extends GetView<SignInController> {
     );
   }
 
-  Widget _buildThirdPartyGoogleLogin(String loginType) {
+  Widget _buildThirdPartyGoogleLogin(
+    String loginType,
+    String logo,
+  ) {
     return Container(
       width: 295.w,
       height: 44.h,
@@ -55,10 +58,10 @@ class SignInPage extends GetView<SignInController> {
               left: 40.w,
               right: 30.w,
             ),
-            child: Image.asset('assets/icons/google.png'),
+            child: Image.asset('assets/icons/$logo.png'),
           ),
           Text(
-            'Sign in with Google',
+            'Sign in with $loginType',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AppColors.primaryText,
@@ -79,8 +82,9 @@ class SignInPage extends GetView<SignInController> {
         child: Column(
           children: [
             _buildLogo(),
-            _buildThirdPartyGoogleLogin('Google'),
-            _buildThirdPartyGoogleLogin('Facebook'),
+            _buildThirdPartyGoogleLogin('Google', 'google'),
+            _buildThirdPartyGoogleLogin('Facebook', 'facebook'),
+            _buildThirdPartyGoogleLogin('Apple', 'apple'),
           ],
         ),
       ),
