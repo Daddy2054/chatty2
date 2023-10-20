@@ -5,8 +5,6 @@ class StorageService extends GetxService {
   
   static StorageService get to => Get.find();
 
-  //static StorageService get to => Get.put(StorageService());
-  //""StorageService" not found. You need to call "Get.put(StorageService())" or "Get.lazyPut(()=>StorageService())""
   late final SharedPreferences _prefs;
 
   Future<StorageService> init() async {
