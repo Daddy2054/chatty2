@@ -1,14 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../../common/apis/apis.dart';
 import '../../../common/entities/entities.dart';
 import '../../../common/routes/names.dart';
-import '../../../common/store/user.dart';
-import '../../../common/widgets/widgets.dart';
 import 'state.dart';
 
 class SignInController extends GetxController {
@@ -61,21 +56,22 @@ class SignInController extends GetxController {
 }
 
 asyncPostAllData(LoginRequestEntity loginRequestEntity) async {
-  EasyLoading.show(
-    indicator: const CircularProgressIndicator(),
-    maskType: EasyLoadingMaskType.clear,
-    dismissOnTap: true,
-  );
-  var result = await UserAPI.Login(params: loginRequestEntity);
-  if (kDebugMode) {
-    print(result);
-  }
-  if (result.code == 0) {
-    await UserStore.to.saveProfile(result.data!);
-    EasyLoading.dismiss();
+  // EasyLoading.show(
+  //   indicator: const CircularProgressIndicator(),
+  //   maskType: EasyLoadingMaskType.clear,
+  //   dismissOnTap: true,
+  // );
+  // var result = await UserAPI.Login(params: loginRequestEntity);
+  // if (kDebugMode) {
+  //   print(result);
+  // }
+  // if (result.code == 0) {
+  //   await UserStore.to.saveProfile(result.data!);
+  //   EasyLoading.dismiss();
+  print("let's go to the message page");
     Get.offAllNamed(AppRoutes.Message);
-  } else {
-    EasyLoading.dismiss();
-    toastInfo(msg: 'internet error');
-  }
+  // } else {
+    // EasyLoading.dismiss();
+    // toastInfo(msg: 'internet error');
+ // }
 }
