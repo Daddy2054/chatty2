@@ -27,10 +27,10 @@ class SignInController extends GetxController {
         }
          var user = await _googleSignIn.signIn();
         if (user != null) {
-          // String? displayName = user.displayName;
-          // String email = user.email;
-          // String id = user.id;
-          // String photoUrl = user.photoUrl ?? 'assets/icons/google.png';
+           String? displayName = user.displayName;
+           String email = user.email;
+           String id = user.id;
+           String photoUrl = user.photoUrl ?? 'assets/icons/google.png';
           // LoginRequestEntity loginPanelListRequestEntity = LoginRequestEntity();
           // loginPanelListRequestEntity.avatar = photoUrl;
           // loginPanelListRequestEntity.name = displayName;
