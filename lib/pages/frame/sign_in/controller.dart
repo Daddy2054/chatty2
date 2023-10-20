@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../common/entities/entities.dart';
 import 'state.dart';
 
 class SignInController extends GetxController {
@@ -11,10 +12,8 @@ class SignInController extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['openid']);
 
   void handlesignIn(String type) async {
-    //1:google
-    //2:facebook,
-    //3:apple,
-    //4:phone
+    //1:email 2:google 3:facebook 4:apple 5:phone
+
 
     try {
       if (type == 'phone_number') {
@@ -31,12 +30,12 @@ class SignInController extends GetxController {
            String email = user.email;
            String id = user.id;
            String photoUrl = user.photoUrl ?? 'assets/icons/google.png';
-          // LoginRequestEntity loginPanelListRequestEntity = LoginRequestEntity();
-          // loginPanelListRequestEntity.avatar = photoUrl;
-          // loginPanelListRequestEntity.name = displayName;
-          // loginPanelListRequestEntity.email = email;
-          // loginPanelListRequestEntity.open_id = id;
-          // loginPanelListRequestEntity.type = 2;
+           LoginRequestEntity loginPanelListRequestEntity = LoginRequestEntity();
+          loginPanelListRequestEntity.avatar = photoUrl;
+          loginPanelListRequestEntity.name = displayName;
+          loginPanelListRequestEntity.email = email;
+          loginPanelListRequestEntity.open_id = id;
+          loginPanelListRequestEntity.type = 2;
         }
       } else if (type == 'facebook') {
         if (kDebugMode) {
