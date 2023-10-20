@@ -1,4 +1,6 @@
 // 是否启用代理
+// ignore_for_file: constant_identifier_names
+
 const PROXY_ENABLE = false;
 
 /// 代理服务IP

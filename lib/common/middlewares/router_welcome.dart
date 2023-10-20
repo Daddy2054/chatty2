@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,13 +15,15 @@ class RouteWelcomeMiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    print(ConfigStore.to.isFirstOpen);
+    if (kDebugMode) {
+      print(ConfigStore.to.isFirstOpen);
+    }
     if (ConfigStore.to.isFirstOpen == false) {
       return null;
     } else if (UserStore.to.isLogin == true) {
-      return RouteSettings(name: AppRoutes.Message);
+      return const RouteSettings(name: AppRoutes.Message);
     } else {
-      return RouteSettings(name: AppRoutes.SIGN_IN);
+      return const RouteSettings(name: AppRoutes.SIGN_IN);
     }
   }
 }

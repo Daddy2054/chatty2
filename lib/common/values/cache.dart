@@ -1,4 +1,6 @@
 // 是否启用缓存
+// ignore_for_file: constant_identifier_names
+
 const CACHE_ENABLE = false;
 
 // 缓存的最长时间，单位（秒）
