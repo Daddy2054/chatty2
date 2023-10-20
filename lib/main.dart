@@ -8,7 +8,7 @@ import 'global.dart';
 Future<void> main() async {
   await Global.init();
   runApp(const MyApp());
-  // firebaseInit().whenComplete(() {
+ // firebaseInit().whenComplete(() {
   //   FirebaseMassagingHandler.config();
   // });
 }
