@@ -37,6 +37,9 @@ class MessagePage extends GetView<MessageController> {
                         ),
                       ],
                     ),
+                    child: controller.state.head_detail.value.avatar == null
+                        ? Image.asset('assets/images/account_header.png')
+                        : const Text('hi'),
                   ),
                 ),
               ],
