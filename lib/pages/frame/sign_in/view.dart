@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -26,7 +28,7 @@ class SignInPage extends GetView<SignInController> {
     );
   }
 
-  Widget _buildThirdPartyGoogleLogin(
+  Widget _buildThirdPartyLogin(
     String loginType,
     String logo,
   ) {
@@ -82,12 +84,42 @@ class SignInPage extends GetView<SignInController> {
         child: Column(
           children: [
             _buildLogo(),
-            _buildThirdPartyGoogleLogin('Google', 'google'),
-            _buildThirdPartyGoogleLogin('Facebook', 'facebook'),
-            _buildThirdPartyGoogleLogin('Apple', 'apple'),
+            _buildThirdPartyLogin('Google', 'google'),
+            _buildThirdPartyLogin('Facebook', 'facebook'),
+            _buildThirdPartyLogin('Apple', 'apple'),
+            _buildOrWidget(),
           ],
         ),
       ),
     );
   }
 }
+
+Widget _buildOrWidget () {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 20.h,
+        bottom: 35.h,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Divider(
+              indent: 50,
+              height: 2.h,
+              color: AppColors.primarySecondaryElementText,
+            ),
+          ),
+          const Text(' or '),
+          Expanded(
+            child: Divider(
+              endIndent: 50,
+              height: 2.h,
+              color: AppColors.primarySecondaryElementText,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
