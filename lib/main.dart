@@ -1,3 +1,4 @@
+import 'package:chatty/common/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,9 +24,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 780),
       builder: (context, child) => GetMaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: AppTheme.light,
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
       ),
