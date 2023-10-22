@@ -1,3 +1,4 @@
+import 'package:chatty/common/style/color.dart';
 import 'package:chatty/common/values/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,6 +41,27 @@ class MessagePage extends GetView<MessageController> {
                     child: controller.state.head_detail.value.avatar == null
                         ? Image.asset('assets/images/account_header.png')
                         : const Text('hi'),
+                  ),
+                ),
+                Positioned(
+                  bottom: 5.w,
+                  right: 0.w,
+                  height: 14.w,
+                  child: Container(
+                    width: 14.w,
+                    height: 14.w,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 2.w,
+                        color: AppColors.primaryElementText,
+                      ),
+                      color: AppColors.primaryElementStatus,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          12.w,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
