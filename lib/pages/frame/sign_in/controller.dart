@@ -68,7 +68,9 @@ asyncPostAllData(LoginRequestEntity loginRequestEntity) async {
   // if (result.code == 0) {
   //   await UserStore.to.saveProfile(result.data!);
   //   EasyLoading.dismiss();
-  print("let's go to the message page");
+  if (kDebugMode) {
+    print("let's go to the message page");
+  }
     Get.offAllNamed(AppRoutes.Message);
   // } else {
     // EasyLoading.dismiss();

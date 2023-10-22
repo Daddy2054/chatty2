@@ -1,9 +1,8 @@
-import 'package:chatty/common/style/color.dart';
-import 'package:chatty/common/values/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../common/values/colors.dart';
 import 'index.dart';
 
 class MessagePage extends GetView<MessageController> {
@@ -42,6 +41,9 @@ class MessagePage extends GetView<MessageController> {
                         ? Image.asset('assets/images/account_header.png')
                         : const Text('hi'),
                   ),
+                  onTap: () {
+                    controller.goProfile();
+                  },
                 ),
                 Positioned(
                   bottom: 5.w,
