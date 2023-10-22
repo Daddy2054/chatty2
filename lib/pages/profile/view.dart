@@ -442,7 +442,7 @@ class ProfilePage extends GetView<ProfileController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          _buildLogo(context),
+                   //       _buildLogo(context),
                           _buildNameInput(),
                           _buildDescripeInput(),
                           _buildSeleteStatusInput(),
