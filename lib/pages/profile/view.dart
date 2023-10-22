@@ -69,17 +69,22 @@ class ProfilePage extends GetView<ProfileController> {
             ),
           ],
         ),
-        child: CachedNetworkImage(
-            imageUrl: controller.state.profile_detail.value.avatar!,
-            height: 120.w,
-            width: 120.w,
-            imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(60.w)),
-                    image:
-                        DecorationImage(image: imageProvider, fit: BoxFit.fill),
-                  ),
-                )),
+        child: const Image(
+          image: AssetImage(
+            'assets/images/account_header.png',
+          ),
+        ),
+        // child: CachedNetworkImage(
+        //   imageUrl: controller.state.profile_detail.value.avatar!,
+        //   height: 120.w,
+        //   width: 120.w,
+        //   imageBuilder: (context, imageProvider) => Container(
+        //     decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.all(Radius.circular(60.w)),
+        //       image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
+        //     ),
+        //   ),
+        // ),
       ),
       Positioned(
           bottom: 50.w,
@@ -442,7 +447,7 @@ class ProfilePage extends GetView<ProfileController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                   //       _buildLogo(context),
+                          _buildLogo(context),
                           _buildNameInput(),
                           _buildDescripeInput(),
                           _buildSeleteStatusInput(),
