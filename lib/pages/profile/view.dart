@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatty/common/values/values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,8 +68,10 @@ class ProfilePage extends GetView<ProfileController> {
             ),
           ],
         ),
-        child: const Image(
-          image: AssetImage(
+        child: Image(
+          height: 120.w,
+          width: 120.w,
+          image: const AssetImage(
             'assets/images/account_header.png',
           ),
         ),
