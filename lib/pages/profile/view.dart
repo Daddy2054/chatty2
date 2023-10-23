@@ -193,8 +193,9 @@ class ProfilePage extends GetView<ProfileController> {
             onCancel: () {},
             textConfirm: "Confirm",
             textCancel: "Cancel",
+            confirmTextColor: Colors.white,
           );
-        });
+        },);
   }
 
   Widget _buildNameInput() {
@@ -432,34 +433,39 @@ class ProfilePage extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _buildAppBar(),
-        backgroundColor: Colors.white,
-        body: Obx(() => SafeArea(
-              child: CustomScrollView(slivers: [
-                SliverPadding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 15.w,
-                    horizontal: 15.w,
-                  ),
-                  sliver: SliverToBoxAdapter(
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 0.h, top: 0.h),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          _buildLogo(context),
-                          _buildNameInput(),
-                          _buildDescripeInput(),
-                          _buildSeleteStatusInput(),
-                          _buildCompleteBtn(),
-                          _buildLogoutBtn()
-                        ],
-                      ),
+      appBar: _buildAppBar(),
+      backgroundColor: Colors.white,
+      body: Obx(
+        () => SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 15.w,
+                  horizontal: 15.w,
+                ),
+                sliver: SliverToBoxAdapter(
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 0.h, top: 0.h),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        _buildLogo(context),
+                        _buildNameInput(),
+                        _buildDescripeInput(),
+                        _buildSeleteStatusInput(),
+                        _buildCompleteBtn(),
+                        _buildLogoutBtn()
+                      ],
                     ),
                   ),
                 ),
-              ]),
-            )));
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
