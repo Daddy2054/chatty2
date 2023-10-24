@@ -1,4 +1,3 @@
-import 'package:chatty/common/utils/http.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -6,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../common/entities/entities.dart';
 import '../../../common/routes/names.dart';
+import '../../../common/store/store.dart';
 import 'state.dart';
 
 class SignInController extends GetxController {
@@ -78,8 +78,9 @@ asyncPostAllData(LoginRequestEntity loginRequestEntity) async {
   //var response = await HttpUtil().get('/api/index');
 //    var response = await dio.get(
   if (kDebugMode) {
-    print(response.data);
+    print(response);
   }
+  UserStore.to.setIsLogin = true;
   Get.offAllNamed(AppRoutes.Message);
   // } else {
   // EasyLoading.dismiss();
