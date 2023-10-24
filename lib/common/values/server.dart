@@ -1,7 +1,7 @@
 // baidu yapi
  // ignore_for_file: constant_identifier_names
 
- const SERVER_API_URL = 'https://chatty.codemain.top/';
+ const SERVER_API_URL = 'http://192.168.0.149:8000';
  const APPID = "e11666dd3c4346568b67b80823bcca50";
 
 //  yapi

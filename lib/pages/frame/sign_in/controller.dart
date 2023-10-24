@@ -1,3 +1,5 @@
+import 'package:chatty/common/utils/http.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -71,9 +73,16 @@ asyncPostAllData(LoginRequestEntity loginRequestEntity) async {
   if (kDebugMode) {
     print("let's go to the message page");
   }
-    Get.offAllNamed(AppRoutes.Message);
+  var response = await Dio().get('http://10.0.2.2:8000/api/index');
+  //var response = await Dio().get('http://192.168.0.149:8000/api/index');
+  //var response = await HttpUtil().get('/api/index');
+//    var response = await dio.get(
+  if (kDebugMode) {
+    print(response.data);
+  }
+  Get.offAllNamed(AppRoutes.Message);
   // } else {
-    // EasyLoading.dismiss();
-    // toastInfo(msg: 'internet error');
- // }
+  // EasyLoading.dismiss();
+  // toastInfo(msg: 'internet error');
+  // }
 }
