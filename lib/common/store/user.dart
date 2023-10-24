@@ -10,11 +10,11 @@ import '../values/values.dart';
 class UserStore extends GetxController {
   static UserStore get to => Get.find();
 
-  // 是否登录
+  // if logged in
   final _isLogin = false.obs;
-  // 令牌 token
+  // loging token
   String token = '';
-  // 用户 profile
+  // user profile
   final _profile = UserItem().obs;
 
   bool get isLogin => _isLogin.value;
