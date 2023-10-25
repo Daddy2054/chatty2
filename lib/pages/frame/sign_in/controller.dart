@@ -1,5 +1,8 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -7,6 +10,7 @@ import '../../../common/apis/apis.dart';
 import '../../../common/entities/entities.dart';
 import '../../../common/routes/names.dart';
 import '../../../common/store/store.dart';
+import '../../../common/widgets/widgets.dart';
 import 'state.dart';
 
 class SignInController extends GetxController {
@@ -39,6 +43,9 @@ class SignInController extends GetxController {
           loginPageListRequestEntity.email = email;
           loginPageListRequestEntity.open_id = id;
           loginPageListRequestEntity.type = 2;
+          if (kDebugMode) {
+            print('loginPageListRequestEntity: ${jsonEncode(loginPageListRequestEntity)}');
+          }
           asyncPostAllData(loginPageListRequestEntity);
         }
       } else if (type == 'facebook') {
@@ -59,32 +66,22 @@ class SignInController extends GetxController {
 }
 
 asyncPostAllData(LoginRequestEntity loginRequestEntity) async {
-  // EasyLoading.show(
-  //   indicator: const CircularProgressIndicator(),
-  //   maskType: EasyLoadingMaskType.clear,
-  //   dismissOnTap: true,
-  // );
+  EasyLoading.show(
+    indicator: const CircularProgressIndicator(),
+    maskType: EasyLoadingMaskType.clear,
+    dismissOnTap: true,
+  );
   var result = await UserAPI.Login(params: loginRequestEntity);
   if (kDebugMode) {
-    print(result);
+    print('result.data: ${jsonEncode(result.data)}');
   }
-  // if (result.code == 0) {
-  //   await UserStore.to.saveProfile(result.data!);
-  //   EasyLoading.dismiss();
-  if (kDebugMode) {
-    print("let's go to the message page");
-  }
-  var response = await Dio().get('http://10.0.2.2:8000/api/index');
-  //var response = await Dio().get('http://192.168.0.149:8000/api/index');
-  //var response = await HttpUtil().get('/api/index');
-//    var response = await dio.get(
-  if (kDebugMode) {
-    print(response);
+  if (result.code == 0) {
+    await UserStore.to.saveProfile(result.data!);
+    EasyLoading.dismiss();
+  } else {
+    EasyLoading.dismiss();
+    toastInfo(msg: 'internet error');
   }
   UserStore.to.setIsLogin = true;
   Get.offAllNamed(AppRoutes.Message);
-  // } else {
-  // EasyLoading.dismiss();
-  // toastInfo(msg: 'internet error');
-  // }
 }

@@ -59,12 +59,13 @@ class HttpUtil {
 
     dio = Dio(options);
 
-    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient =
-        (HttpClient client) {
+   
+    dio.httpClientAdapter = IOHttpClientAdapter(createHttpClient: () {
+      final client = HttpClient();
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
       return client;
-    } as CreateHttpClient?;
+    });
 
     // Cookie管理
     CookieJar cookieJar = CookieJar();
