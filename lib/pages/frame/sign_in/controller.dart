@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../common/apis/apis.dart';
 import '../../../common/entities/entities.dart';
 import '../../../common/routes/names.dart';
 import '../../../common/store/store.dart';
@@ -63,10 +64,10 @@ asyncPostAllData(LoginRequestEntity loginRequestEntity) async {
   //   maskType: EasyLoadingMaskType.clear,
   //   dismissOnTap: true,
   // );
-  // var result = await UserAPI.Login(params: loginRequestEntity);
-  // if (kDebugMode) {
-  //   print(result);
-  // }
+  var result = await UserAPI.Login(params: loginRequestEntity);
+  if (kDebugMode) {
+    print(result);
+  }
   // if (result.code == 0) {
   //   await UserStore.to.saveProfile(result.data!);
   //   EasyLoading.dismiss();
