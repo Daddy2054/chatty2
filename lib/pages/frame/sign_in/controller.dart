@@ -82,6 +82,6 @@ asyncPostAllData(LoginRequestEntity loginRequestEntity) async {
     EasyLoading.dismiss();
     toastInfo(msg: 'internet error');
   }
-  UserStore.to.setIsLogin = true;
+ // UserStore.to.setIsLogin = true;
   Get.offAllNamed(AppRoutes.Message);
 }
