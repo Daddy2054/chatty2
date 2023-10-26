@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../common/routes/routes.dart';
 import '../../common/values/colors.dart';
 import 'index.dart';
 
@@ -87,6 +88,37 @@ class MessagePage extends GetView<MessageController> {
                   title: _headBar(),
                 )
               ],
+            ),
+            Positioned(
+              right: 20.w,
+              bottom: 70.w,
+              height: 50.w,
+              width: 50.w,
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed(AppRoutes.Contact);
+                },
+                child: Container(
+                  height: 50.w,
+                  width: 50.w,
+                  padding: EdgeInsets.all(10.w),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryElement,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(40.w),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 2,
+                        blurRadius: 2,
+                        offset: const Offset(1, 1),
+                      ),
+                    ],
+                  ),
+                  child: Image.asset('assets/icons/contact.png'),
+                ),
+              ),
             ),
           ],
         ),
