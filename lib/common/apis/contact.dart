@@ -4,8 +4,8 @@ import '../entities/entities.dart';
 import '../utils/utils.dart';
 
 class ContactAPI {
-  /// 翻页
-  /// refresh 是否刷新
+  /// contact page
+  /// get all contact of users info
   static Future<ContactResponseEntity> post_contact() async {
     var response = await HttpUtil().post(
       'api/contact',
