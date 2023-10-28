@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:chatty/common/entities/contact.dart';
 import 'package:chatty/common/entities/entities.dart';
 import 'package:chatty/common/store/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,22 +24,98 @@ class ContactController extends GetxController {
     asyncLoadAllData();
   }
 
-  Future<void> goChat(ContactItem contactItem) async {
+  // Future<void> goChat(ContactItem contactItem) async {
+  //   var from_messages = await db
+  //       .collection('message')
+  //       .withConverter(
+  //         fromFirestore: Msg.fromFirestore,
+  //         toFirestore: (Msg msg, options) => msg.toFirestore(),
+  //       )
+  //       .where(
+  //         'from_token',
+  //         isEqualTo: token,
+  //       )
+  //       .where(
+  //         'to_token',
+  //         isEqualTo: contactItem.token,
+  //       )
+  //       .get();
+  //   if (kDebugMode) {
+  //   print('...from_messages ${from_messages.docs.isNotEmpty}');
+  //   }
+
+  //   var to_messages = await db
+  //       .collection('message')
+  //       .withConverter(
+  //         fromFirestore: Msg.fromFirestore,
+  //         toFirestore: (Msg msg, options) => msg.toFirestore(),
+  //       )
+  //       .where(
+  //         'from_token',
+  //         isEqualTo: contactItem.token,
+  //       )
+  //       .where(
+  //         'to_token',
+  //         isEqualTo: token,
+  //       )
+  //       .get();
+  //   if (kDebugMode) {
+  //   print('...to_messages ${to_messages.docs.isNotEmpty}');
+  //   }
+
+  //   if (from_messages.docs.isEmpty && to_messages.docs.isEmpty) {
+  //     var profile = UserStore.to.profile;
+  //     var msgdata = Msg(
+  //       from_token: profile.token,
+  //       to_token: contactItem.token,
+  //       from_name: profile.name,
+  //       to_name: contactItem.name,
+  //       from_avatar: profile.avatar,
+  //       to_avatar: contactItem.name,
+  //       from_online: profile.online,
+  //       to_online: contactItem.online,
+  //       last_msg: '',
+  //       last_time: Timestamp.now(),
+  //       msg_num: 0,
+  //     );
+  //     var doc_id = await db
+  //         .collection('message')
+  //         .withConverter(
+  //             fromFirestore: Msg.fromFirestore,
+  //             toFirestore: (Msg msg, options) => msg.toFirestore())
+  //         .add(msgdata);
+
+  //     // Get.offAllNamed(
+  //     //   '/chat',
+  //     //   parameters: {
+  //     //     'doc_id': doc_id.id,
+  //     //     'to_token': contactItem.token ?? '',
+  //     //     'to_name': contactItem.name ?? '',
+  //     //     'to_avatar': contactItem.online.toString(),
+  //     //   },
+  //     // );
+  //     if (kDebugMode) {
+  //       print('...creating new document and adding user info done.....');
+  //     }
+  //   } else {
+  //     if (kDebugMode) {
+  //       print('...users are older...');
+  //     }
+  //   }
+  // }
+
+ Future<void> goChat(ContactItem contactItem) async {
     var from_messages = await db
         .collection('message')
         .withConverter(
           fromFirestore: Msg.fromFirestore,
           toFirestore: (Msg msg, options) => msg.toFirestore(),
         )
-        .where(
-          'from_token',
-          isEqualTo: token,
-        )
-        .where(
-          'to_token',
-          isEqualTo: contactItem.token,
-        )
+        .where('from_token', isEqualTo: token)
+        .where('to_token', isEqualTo: contactItem.token)
         .get();
+
+    print('...from_messages ${from_messages.docs.isNotEmpty}');
 
     var to_messages = await db
         .collection('message')
@@ -48,15 +123,11 @@ class ContactController extends GetxController {
           fromFirestore: Msg.fromFirestore,
           toFirestore: (Msg msg, options) => msg.toFirestore(),
         )
-        .where(
-          'from_token',
-          isEqualTo: contactItem.token,
-        )
-        .where(
-          'to_token',
-          isEqualTo: token,
-        )
+        .where('from_token', isEqualTo: contactItem.token)
+        .where('to_token', isEqualTo: token)
         .get();
+
+    print('...to_messages ${to_messages.docs.isNotEmpty}');
 
     if (from_messages.docs.isEmpty && to_messages.docs.isEmpty) {
       var profile = UserStore.to.profile;
@@ -66,13 +137,14 @@ class ContactController extends GetxController {
         from_name: profile.name,
         to_name: contactItem.name,
         from_avatar: profile.avatar,
-        to_avatar: contactItem.name,
+        to_avatar: contactItem.avatar,
         from_online: profile.online,
         to_online: contactItem.online,
         last_msg: '',
         last_time: Timestamp.now(),
         msg_num: 0,
       );
+
       var doc_id = await db
           .collection('message')
           .withConverter(
@@ -80,18 +152,20 @@ class ContactController extends GetxController {
               toFirestore: (Msg msg, options) => msg.toFirestore())
           .add(msgdata);
 
-      Get.offAllNamed(
-        '/chat',
-        parameters: {
-          'doc_id': doc_id.id,
-          'to_token': contactItem.token ?? '',
-          'to_name': contactItem.name ?? '',
-          'to_avatar': contactItem.online.toString(),
-        },
-      );
+      // Get.offAllNamed('/chat', parameters: {
+      //   'doc_id': doc_id.id,
+      //   'to_token': contactItem.token ?? '',
+      //   'to_name': contactItem.name ?? '',
+      //   'to_avatar': contactItem.avatar ?? '',
+      //   'to_online': contactItem.online.toString(),
+      // });
+
+      print('...creating new document and adding user info done....');
+    } else {
+      print('...users are older...');
     }
   }
-
+  
   asyncLoadAllData() async {
     EasyLoading.show(
       indicator: const CircularProgressIndicator(),
