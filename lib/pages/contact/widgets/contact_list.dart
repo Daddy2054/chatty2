@@ -22,7 +22,9 @@ class ContactList extends GetView<ContactController> {
         ),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          controller.goChat(item);
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
