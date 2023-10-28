@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:chatty/common/entities/contact.dart';
 import 'package:chatty/common/entities/entities.dart';
 import 'package:chatty/common/store/user.dart';
@@ -55,6 +57,23 @@ class ContactController extends GetxController {
           isEqualTo: token,
         )
         .get();
+
+    if (from_messages.docs.isEmpty && to_messages.docs.isEmpty) {
+      var profile = UserStore.to.profile;
+      Msg(
+        from_token: profile.token,
+        to_token: contactItem.token,
+        from_name: profile.name,
+        to_name: contactItem.name,
+        from_avatar: profile.avatar,
+        to_avatar: contactItem.name,
+        from_online: profile.online,
+        to_online: contactItem.online,
+        last_msg: '',
+        last_time: Timestamp.now(),
+        msg_num: 0,
+      );
+    }
   }
 
   asyncLoadAllData() async {
