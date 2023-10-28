@@ -24,6 +24,8 @@ class ContactList extends GetView<ContactController> {
       child: InkWell(
         onTap: () {},
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: 44.w,
@@ -56,6 +58,48 @@ class ContactList extends GetView<ContactController> {
                     ),
                   ),
                 ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                width: 275.w,
+                padding: EdgeInsets.only(
+                  top: 10.w,
+                  left: 10.w,
+                  right: 0.w,
+                  bottom: 0.w,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 200.w,
+                      height: 42.h,
+                      child: Text(
+                        '${item.name}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.thirdElement,
+                          fontSize: 16.sp,
+                          fontFamily: 'Avenir',
+                        ),
+                        overflow: TextOverflow.clip,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: 5.w,
+              ),
+              width: 12.w,
+              height: 12.h,
+              child: Image.asset(
+                'assets/icons/ang.png',
               ),
             ),
           ],
