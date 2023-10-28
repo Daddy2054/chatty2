@@ -60,7 +60,7 @@ class ContactController extends GetxController {
 
     if (from_messages.docs.isEmpty && to_messages.docs.isEmpty) {
       var profile = UserStore.to.profile;
-      Msg(
+      var msgdata = Msg(
         from_token: profile.token,
         to_token: contactItem.token,
         from_name: profile.name,
@@ -72,6 +72,22 @@ class ContactController extends GetxController {
         last_msg: '',
         last_time: Timestamp.now(),
         msg_num: 0,
+      );
+      var doc_id = await db
+          .collection('message')
+          .withConverter(
+              fromFirestore: Msg.fromFirestore,
+              toFirestore: (Msg msg, options) => msg.toFirestore())
+          .add(msgdata);
+
+      Get.offAllNamed(
+        '/chat',
+        parameters: {
+          'doc_id': doc_id.id,
+          'to_token': contactItem.token ?? '',
+          'to_name': contactItem.name ?? '',
+          'to_avatar': contactItem.online.toString(),
+        },
       );
     }
   }
