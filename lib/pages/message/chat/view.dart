@@ -84,7 +84,7 @@ class ChatPage extends GetView<ChatController> {
           Positioned(
               bottom: 0.h,
               child: Container(
-                color: Colors.red,
+                //    color: Colors.red,
                 width: 360.w,
                 padding: EdgeInsets.only(
                   left: 20.w,
@@ -94,6 +94,10 @@ class ChatPage extends GetView<ChatController> {
                   children: [
                     Container(
                       width: 270.w,
+                      padding: EdgeInsets.only(
+                        top: 10.h,
+                        bottom: 10.h,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.primaryBackground,
                         border: Border.all(
@@ -107,8 +111,30 @@ class ChatPage extends GetView<ChatController> {
                         children: [
                           SizedBox(
                             width: 220.w,
-                            child: const TextField(
+                            child: TextField(
                               keyboardType: TextInputType.multiline,
+                              autofocus: false,
+                              decoration: InputDecoration(
+                                hintText: 'Message...',
+                                contentPadding: EdgeInsets.only(
+                                  left: 15.w,
+                                  top: 0,
+                                  bottom: 0,
+                                ),
+                                border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                hintStyle: const TextStyle(
+                                  color: AppColors.primarySecondaryElementText,
+                                ),
+                              ),
                             ),
                           )
                         ],
