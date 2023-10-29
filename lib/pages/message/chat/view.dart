@@ -78,6 +78,47 @@ class ChatPage extends GetView<ChatController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
+      body: SafeArea(
+          child: Stack(
+        children: [
+          Positioned(
+              bottom: 0.h,
+              child: Container(
+                color: Colors.red,
+                width: 360.w,
+                padding: EdgeInsets.only(
+                  left: 20.w,
+                  bottom: 10.h,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 270.w,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryBackground,
+                        border: Border.all(
+                          color: AppColors.primarySecondaryElementText,
+                        ),
+                        borderRadius: BorderRadius.circular(
+                          5.w,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 220.w,
+                            child: const TextField(
+                              keyboardType: TextInputType.multiline,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ))
+        ],
+      )),
     );
   }
 }
