@@ -24,8 +24,7 @@ class ContactController extends GetxController {
     asyncLoadAllData();
   }
 
- 
- Future<void> goChat(ContactItem contactItem) async {
+  Future<void> goChat(ContactItem contactItem) async {
     var from_messages = await db
         .collection('message')
         .withConverter(
@@ -84,17 +83,30 @@ class ContactController extends GetxController {
         'to_avatar': contactItem.avatar ?? '',
         'to_online': contactItem.online.toString(),
       });
-
-      if (kDebugMode) {
-        print('...creating new document and adding user info done....');
-      }
     } else {
-      if (kDebugMode) {
-        print('...users are older...');
+      if (from_messages.docs.first.id.isNotEmpty) {
+        Get.offAllNamed('/chat', parameters: {
+          'doc_id': from_messages.docs.first.id,
+          'to_token': contactItem.token ?? '',
+          'to_name': contactItem.name ?? '',
+          'to_avatar': contactItem.avatar ?? '',
+          'to_online': contactItem.online.toString(),
+        });
+      }
+      if (to_messages.docs.isNotEmpty) {
+        if (to_messages.docs.first.id.isNotEmpty) {
+          Get.offAllNamed('/chat', parameters: {
+            'doc_id': to_messages.docs.first.id,
+            'to_token': contactItem.token ?? '',
+            'to_name': contactItem.name ?? '',
+            'to_avatar': contactItem.avatar ?? '',
+            'to_online': contactItem.online.toString(),
+          });
+        }
       }
     }
   }
-  
+
   asyncLoadAllData() async {
     EasyLoading.show(
       indicator: const CircularProgressIndicator(),
