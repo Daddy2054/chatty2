@@ -36,7 +36,9 @@ class ContactController extends GetxController {
         .where('to_token', isEqualTo: contactItem.token)
         .get();
 
-    print('...from_messages ${from_messages.docs.isNotEmpty}');
+    if (kDebugMode) {
+      print('...from_messages ${from_messages.docs.isNotEmpty}');
+    }
 
     var to_messages = await db
         .collection('message')
@@ -48,7 +50,9 @@ class ContactController extends GetxController {
         .where('to_token', isEqualTo: token)
         .get();
 
-    print('...to_messages ${to_messages.docs.isNotEmpty}');
+    if (kDebugMode) {
+      print('...to_messages ${to_messages.docs.isNotEmpty}');
+    }
 
     if (from_messages.docs.isEmpty && to_messages.docs.isEmpty) {
       var profile = UserStore.to.profile;
@@ -73,17 +77,21 @@ class ContactController extends GetxController {
               toFirestore: (Msg msg, options) => msg.toFirestore())
           .add(msgdata);
 
-      // Get.offAllNamed('/chat', parameters: {
-      //   'doc_id': doc_id.id,
-      //   'to_token': contactItem.token ?? '',
-      //   'to_name': contactItem.name ?? '',
-      //   'to_avatar': contactItem.avatar ?? '',
-      //   'to_online': contactItem.online.toString(),
-      // });
+      Get.offAllNamed('/chat', parameters: {
+        'doc_id': doc_id.id,
+        'to_token': contactItem.token ?? '',
+        'to_name': contactItem.name ?? '',
+        'to_avatar': contactItem.avatar ?? '',
+        'to_online': contactItem.online.toString(),
+      });
 
-      print('...creating new document and adding user info done....');
+      if (kDebugMode) {
+        print('...creating new document and adding user info done....');
+      }
     } else {
-      print('...users are older...');
+      if (kDebugMode) {
+        print('...users are older...');
+      }
     }
   }
   

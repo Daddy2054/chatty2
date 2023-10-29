@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../entities/entities.dart';
@@ -27,7 +28,9 @@ class UserStore extends GetxController {
     super.onInit();
     token = StorageService.to.getString(STORAGE_USER_TOKEN_KEY);
     var profileOffline = StorageService.to.getString(STORAGE_USER_PROFILE_KEY);
-    print(profileOffline);
+    if (kDebugMode) {
+      print(profileOffline);
+    }
     if (profileOffline.isNotEmpty) {
       _isLogin.value = true;
       _profile(
