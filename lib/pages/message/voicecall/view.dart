@@ -9,7 +9,24 @@ class VoiceCallPage extends GetView<VoiceCallController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryElement,
+      backgroundColor: AppColors.primary_bg,
+      body: Obx(
+        () => Container(
+          child: Stack(
+            children: [
+              Positioned(
+                child: Column(
+                  children: [
+                    Container(
+                      child: Text(controller.state.callTime.value),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

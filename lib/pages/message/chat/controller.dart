@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../../../common/routes/routes.dart';
 import 'index.dart';
 
 class ChatController extends GetxController {
@@ -16,6 +17,11 @@ class ChatController extends GetxController {
     state.more_status.value = !state.more_status.value;
   }
 
+  void audioCall() {
+    state.more_status.value = false;
+    Get.toNamed(AppRoutes.VoiceCall);
+  }
+  
   @override
   void onInit() {
     super.onInit();

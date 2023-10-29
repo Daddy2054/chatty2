@@ -7,6 +7,7 @@ import '../../pages/contact/index.dart';
 import '../../pages/frame/sign_in/index.dart';
 import '../../pages/frame/welcome/index.dart';
 import '../../pages/message/chat/index.dart';
+import '../../pages/message/voicecall/index.dart';
 import '../../pages/message/index.dart';
 import '../../pages/profile/index.dart';
 import '../middlewares/middlewares.dart';
@@ -72,13 +73,19 @@ class AppPages {
       page: () => const ProfilePage(),
       binding: ProfileBinding(),
     ),
-    
+
     //chat detail
-    GetPage(name: AppRoutes.Chat, page: () => const ChatPage(), binding: ChatBinding()),
+    GetPage(
+        name: AppRoutes.Chat,
+        page: () => const ChatPage(),
+        binding: ChatBinding()),
 
     // GetPage(name: AppRoutes.Photoimgview, page: () => PhotoImgViewPage(), binding: PhotoImgViewBinding()),
-    // GetPage(name: AppRoutes.VoiceCall, page: () => VoiceCallViewPage(), binding: VoiceCallViewBinding()),
+    GetPage(
+      name: AppRoutes.VoiceCall,
+      page: () => const VoiceCallPage(),
+      binding: VoiceCallBinding(),
+    ),
     // GetPage(name: AppRoutes.VideoCall, page: () => VideoCallPage(), binding: VideoCallBinding()),
-    
   ];
 }
