@@ -50,6 +50,52 @@ class VoiceCallPage extends GetView<VoiceCallController> {
                     ],
                   ),
                 ),
+                Positioned(
+                  bottom: 80.h,
+                  left: 30.w,
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          // microphone section
+                          GestureDetector(
+                            child: Container(
+                              padding: EdgeInsets.all(15.w),
+                              width: 60.w,
+                              height: 60.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.w),
+                                ),
+                                color: controller.state.openMicrophone.value
+                                    ? AppColors.primaryElementText
+                                    : AppColors.primaryText,
+                              ),
+                              child: controller.state.openMicrophone.value
+                                  ? Image.asset(
+                                      'assets/icons/b_microphone.png',
+                                    )
+                                  : Image.asset(
+                                      'assets/icons/a_microphone.png',
+                                    ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 10.h),
+                            child: Text(
+                              'Microphone',
+                              style: TextStyle(
+                                color: AppColors.primaryElementText,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
