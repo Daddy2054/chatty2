@@ -53,7 +53,9 @@ class VoiceCallPage extends GetView<VoiceCallController> {
                 Positioned(
                   bottom: 80.h,
                   left: 30.w,
+                  right: 30.w,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Column(
                         children: [
@@ -84,6 +86,84 @@ class VoiceCallPage extends GetView<VoiceCallController> {
                             margin: EdgeInsets.only(top: 10.h),
                             child: Text(
                               'Microphone',
+                              style: TextStyle(
+                                color: AppColors.primaryElementText,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          // microphone section
+                          GestureDetector(
+                            child: Container(
+                              padding: EdgeInsets.all(15.w),
+                              width: 60.w,
+                              height: 60.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.w),
+                                ),
+                                color: controller.state.isJoined.value
+                                    ? AppColors.primaryElementBg
+                                    : AppColors.primaryElementStatus,
+                              ),
+                              child: controller.state.isJoined.value
+                                  ? Image.asset(
+                                      'assets/icons/a_phone.png',
+                                    )
+                                  : Image.asset(
+                                      'assets/icons/a_telephone.png',
+                                    ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 10.h),
+                            child: Text(
+                              controller.state.isJoined.value
+                                  ? 'Disconnect'
+                                  : 'Connect',
+                              style: TextStyle(
+                                color: AppColors.primaryElementText,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          // microphone section
+                          GestureDetector(
+                            child: Container(
+                              padding: EdgeInsets.all(15.w),
+                              width: 60.w,
+                              height: 60.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.w),
+                                ),
+                                color: controller.state.enableSpeaker.value
+                                    ? AppColors.primaryElementText
+                                    : AppColors.primaryText,
+                              ),
+                              child: controller.state.enableSpeaker.value
+                                  ? Image.asset(
+                                      'assets/icons/b_trumpet.png',
+                                    )
+                                  : Image.asset(
+                                      'assets/icons/a_trumpet.png',
+                                    ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 10.h),
+                            child: Text(
+                              'Speaker',
                               style: TextStyle(
                                 color: AppColors.primaryElementText,
                                 fontSize: 12.sp,
