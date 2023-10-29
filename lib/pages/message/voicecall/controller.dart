@@ -35,7 +35,7 @@ class VoiceCallController extends GetxController {
   }
 
   Future<void> initEngine() async {
-    await player.setAsset('assets/Sound_Horison.mp3');
+    await player.setAsset('assets/Sound_Horizon.mp3');
 
     engine = createAgoraRtcEngine();
     await engine.initialize(
@@ -45,12 +45,12 @@ class VoiceCallController extends GetxController {
       RtcEngineEventHandler(
         onError: (ErrorCodeType err, String msg) {
           if (kDebugMode) {
-            print('[onError] err: $err,,msg:$msg');
+            print('...[onError] err: $err,,msg:$msg');
           }
         },
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
           if (kDebugMode) {
-            print('onConnection ${connection.toJson()}');
+            print('...onConnection ${connection.toJson()}');
           }
           state.isJoined.value = true;
         },
@@ -67,7 +67,7 @@ class VoiceCallController extends GetxController {
         },
         onRtcStats: (RtcConnection connection, stats) {
           if (kDebugMode) {
-            print('time....');
+            print('...time....');
             print(stats.duration);
           }
         },
@@ -79,7 +79,7 @@ class VoiceCallController extends GetxController {
       profile: AudioProfileType.audioProfileDefault,
       scenario: AudioScenarioType.audioScenarioGameStreaming,
     );
-    joinChannel();
+    await joinChannel();
   }
 
   Future<void> joinChannel() async {
@@ -102,7 +102,6 @@ class VoiceCallController extends GetxController {
     EasyLoading.dismiss();
   }
 
-
   Future<void> leaveChannel() async {
     EasyLoading.show(
       indicator: const CircularProgressIndicator(),
@@ -113,5 +112,25 @@ class VoiceCallController extends GetxController {
     state.isJoined.value = false;
     EasyLoading.dismiss();
     Get.back();
+  }
+
+  Future<void> _dispose() async {
+    await player.pause();
+    await engine.leaveChannel();
+    await engine.release();
+    await player.stop();
+    super.dispose();
+  }
+
+  @override
+  void onClose() {
+    _dispose();
+    super.onClose();
+  }
+
+  @override
+  void dispose() {
+    _dispose();
+    super.dispose();
   }
 }
