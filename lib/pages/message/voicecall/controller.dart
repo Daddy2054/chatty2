@@ -31,6 +31,7 @@ class VoiceCallController extends GetxController {
     if (kDebugMode) {
       print('...your name is ${state.to_name.value}');
     }
+    initEngine();
   }
 
   Future<void> initEngine() async {
@@ -90,10 +91,27 @@ class VoiceCallController extends GetxController {
     );
 
     await engine.joinChannel(
-      token: '',
-      channelId: '',
+      token:
+          '007eJxTYHA5+THMTuqE4panP01nO7dH2/UdCPdZ76BidMLDbJJGRZ0CQ7JBknmSuWmSsYWZsYmJSUqieapJYmpqiqWxuaWhYYpJwny71IZARoaNb8QYGKEQxBdgqEjMKklJKUpNqyjLyE3Jy2ZgAACW/SNW',
+      channelId: 'xajtddrefxvhmdnk',
       uid: 0,
-      options: const ChannelMediaOptions(),
+      options: const ChannelMediaOptions(
+        clientRoleType: ClientRoleType.clientRoleBroadcaster,
+      ),
     );
+    EasyLoading.dismiss();
+  }
+
+
+  Future<void> leaveChannel() async {
+    EasyLoading.show(
+      indicator: const CircularProgressIndicator(),
+      maskType: EasyLoadingMaskType.clear,
+      dismissOnTap: true,
+    );
+    await player.pause();
+    state.isJoined.value = false;
+    EasyLoading.dismiss();
+    Get.back();
   }
 }
