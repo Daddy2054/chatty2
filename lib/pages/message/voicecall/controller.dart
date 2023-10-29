@@ -2,8 +2,11 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:chatty/common/store/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../common/values/values.dart';
 import 'index.dart';
@@ -30,7 +33,7 @@ class VoiceCallController extends GetxController {
     }
   }
 
-  Future<void> initengine() async {
+  Future<void> initEngine() async {
     await player.setAsset('assets/Sound_Horison.mp3');
 
     engine = createAgoraRtcEngine();
@@ -54,7 +57,43 @@ class VoiceCallController extends GetxController {
             (RtcConnection connection, int remoteUid, int elapsed) async {
           await player.pause();
         },
+        onLeaveChannel: (RtcConnection connection, RtcStats stats) {
+          if (kDebugMode) {
+            print('...user left the room');
+//            print('my stats ${stats.toJson()}');
+          }
+          state.isJoined.value = false;
+        },
+        onRtcStats: (RtcConnection connection, stats) {
+          if (kDebugMode) {
+            print('time....');
+            print(stats.duration);
+          }
+        },
       ),
+    );
+    await engine.enableAudio();
+    await engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+    await engine.setAudioProfile(
+      profile: AudioProfileType.audioProfileDefault,
+      scenario: AudioScenarioType.audioScenarioGameStreaming,
+    );
+    joinChannel();
+  }
+
+  Future<void> joinChannel() async {
+    await Permission.microphone.request();
+    EasyLoading.show(
+      indicator: const CircularProgressIndicator(),
+      maskType: EasyLoadingMaskType.clear,
+      dismissOnTap: true,
+    );
+
+    await engine.joinChannel(
+      token: '',
+      channelId: '',
+      uid: 0,
+      options: const ChannelMediaOptions(),
     );
   }
 }
