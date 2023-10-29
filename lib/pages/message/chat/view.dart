@@ -79,9 +79,9 @@ class ChatPage extends GetView<ChatController> {
     return Scaffold(
       appBar: _buildAppBar(),
       body: SafeArea(
-          child: Stack(
-        children: [
-          Positioned(
+        child: Stack(
+          children: [
+            Positioned(
               bottom: 0.h,
               child: Container(
                 //    color: Colors.red,
@@ -89,8 +89,10 @@ class ChatPage extends GetView<ChatController> {
                 padding: EdgeInsets.only(
                   left: 20.w,
                   bottom: 10.h,
+                  right: 20.w,
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       width: 270.w,
@@ -136,15 +138,46 @@ class ChatPage extends GetView<ChatController> {
                                 ),
                               ),
                             ),
-                          )
+                          ),
+                          GestureDetector(
+                            child: SizedBox(
+                              width: 40.w,
+                              height: 40.w,
+                              child: Image.asset('assets/icons/send.png'),
+                            ),
+                            onTap: () {},
+                          ),
                         ],
                       ),
-                    )
+                    ),
+                    GestureDetector(
+                      child: Container(
+                        height: 40.w,
+                        width: 40.h,
+                        padding: EdgeInsets.all(8.w),
+                        decoration: BoxDecoration(
+                            color: AppColors.primaryElement,
+                            borderRadius: BorderRadius.circular(40.w),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 2,
+                                blurRadius: 2,
+                                offset: const Offset(1, 1),
+                              ),
+                            ]),
+                        child: Image.asset(
+                          'assets/icons/add.png',
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-              ))
-        ],
-      )),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
