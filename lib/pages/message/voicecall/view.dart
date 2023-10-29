@@ -22,12 +22,27 @@ class VoiceCallPage extends GetView<VoiceCallController> {
                   right: 30.w,
                   child: Column(
                     children: [
+                      Text(
+                        controller.state.callTime.value,
+                        style: TextStyle(
+                          color: AppColors.primaryElementText,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
                       Container(
+                        width: 70.w,
+                        height: 70.h,
+                        margin: EdgeInsets.only(top: 150.h),
+                        child: Image.network(controller.state.to_avatar.value),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 5.h),
                         child: Text(
-                          controller.state.callTime.value,
+                          controller.state.to_name.value,
                           style: TextStyle(
                             color: AppColors.primaryElementText,
-                            fontSize: 14.sp,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
