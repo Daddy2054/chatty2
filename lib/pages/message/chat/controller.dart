@@ -12,6 +12,10 @@ class ChatController extends GetxController {
 
   late String doc_id;
 
+  void goMore() {
+    state.more_status.value = !state.more_status.value;
+  }
+
   @override
   void onInit() {
     super.onInit();
