@@ -37,5 +37,24 @@ class VoiceCallController extends GetxController {
     await engine.initialize(
       RtcEngineContext(appId: appID),
     );
+    engine.registerEventHandler(
+      RtcEngineEventHandler(
+        onError: (ErrorCodeType err, String msg) {
+          if (kDebugMode) {
+            print('[onError] err: $err,,msg:$msg');
+          }
+        },
+        onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+          if (kDebugMode) {
+            print('onConnection ${connection.toJson()}');
+          }
+          state.isJoined.value = true;
+        },
+        onUserJoined:
+            (RtcConnection connection, int remoteUid, int elapsed) async {
+          await player.pause();
+        },
+      ),
+    );
   }
 }
