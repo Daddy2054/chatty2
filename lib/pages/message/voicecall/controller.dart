@@ -1,11 +1,22 @@
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:chatty/common/store/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 
+import '../../../common/values/values.dart';
 import 'index.dart';
 
 class VoiceCallController extends GetxController {
   VoiceCallController();
   final state = VoiceCallState();
+  final player = AudioPlayer();
+  String appID = APPID;
+  final db = FirebaseFirestore.instance;
+  // ignore: non_constant_identifier_names
+  final profile_token = UserStore();
+  late final RtcEngine engine;
 
   @override
   void onInit() {
@@ -17,5 +28,14 @@ class VoiceCallController extends GetxController {
     if (kDebugMode) {
       print('...your name is ${state.to_name.value}');
     }
+  }
+
+  Future<void> initengine() async {
+    await player.setAsset('assets/Sound_Horison.mp3');
+
+    engine = createAgoraRtcEngine();
+    await engine.initialize(
+      RtcEngineContext(appId: appID),
+    );
   }
 }
