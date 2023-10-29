@@ -175,6 +175,39 @@ class ChatPage extends GetView<ChatController> {
                 ),
               ),
             ),
+            Positioned(
+              right: 20.w,
+              bottom: 70.w,
+              height: 200.h,
+              width: 40.w,
+              child: Column(
+                children: [
+                  GestureDetector(
+                    child: Container(
+                      height: 40.h,
+                      width: 40.w,
+                      padding: EdgeInsets.all(10.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40.w),
+                        color: AppColors.primaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 2,
+                            offset: const Offset(1, 1),
+                          ),
+                        ],
+                      ),
+                      child: Image.asset(
+                        'assets/icons/file.png',
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
