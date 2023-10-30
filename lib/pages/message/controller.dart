@@ -1,4 +1,3 @@
-import 'package:chatty/common/apis/chat.dart';
 import 'package:chatty/common/entities/base.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -30,7 +29,7 @@ class MessageController extends GetxController {
       BindFcmTokenRequestEntity bindFcmTokenRequestEntity =
           BindFcmTokenRequestEntity();
       bindFcmTokenRequestEntity.fcmtoken = fcmToken;
-      await ChatAPI.bind_fcmtoken(params: bindFcmTokenRequestEntity);
+  //    await ChatAPI.bind_fcmtoken(params: bindFcmTokenRequestEntity);
     }
   }
 }
