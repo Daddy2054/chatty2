@@ -1,4 +1,7 @@
+import 'package:chatty/common/apis/chat.dart';
+import 'package:chatty/common/entities/base.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../common/routes/routes.dart';
@@ -19,6 +22,15 @@ class MessageController extends GetxController {
   }
 
   firebaseMessageSetup() async {
-    String? fcmtoken = await FirebaseMessaging.instance.getToken();
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
+    if (kDebugMode) {
+      print('...my device token is $fcmToken');
+    }
+    if (fcmToken != null) {
+      BindFcmTokenRequestEntity bindFcmTokenRequestEntity =
+          BindFcmTokenRequestEntity();
+      bindFcmTokenRequestEntity.fcmtoken = fcmToken;
+      await ChatAPI.bind_fcmtoken(params: bindFcmTokenRequestEntity);
+    }
   }
 }
