@@ -27,6 +27,7 @@ class VoiceCallController extends GetxController {
     var data = Get.parameters;
     state.to_name.value = data['to_name'] ?? '';
     state.to_avatar.value = data['to_avatar'] ?? '';
+    state.call_role.value = data['call_role'] ?? '';
 
     if (kDebugMode) {
       print('...your name is ${state.to_name.value}');
@@ -80,6 +81,9 @@ class VoiceCallController extends GetxController {
       scenario: AudioScenarioType.audioScenarioGameStreaming,
     );
     await joinChannel();
+    if (state.call_role.value == 'anchor') {
+      await player.play();
+    }
   }
 
   Future<void> joinChannel() async {

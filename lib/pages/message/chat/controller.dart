@@ -22,6 +22,7 @@ class ChatController extends GetxController {
     Get.toNamed(AppRoutes.VoiceCall, parameters: {
       "to_name": state.to_name.value,
       'to_avatar': state.to_avatar.value,
+      'call_role': 'anchor',
     });
   }
 
