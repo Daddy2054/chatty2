@@ -23,6 +23,7 @@ Future firebaseChatInit() async {
       FirebaseMessagingHandler.firebaseMessagingBackground);
 
   if (GetPlatform.isAndroid) {
+    
     FirebaseMessagingHandler.flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()!

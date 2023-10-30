@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../../common/apis/apis.dart';
 import '../../common/routes/routes.dart';
 import 'state.dart';
 
@@ -29,7 +30,7 @@ class MessageController extends GetxController {
       BindFcmTokenRequestEntity bindFcmTokenRequestEntity =
           BindFcmTokenRequestEntity();
       bindFcmTokenRequestEntity.fcmtoken = fcmToken;
-  //    await ChatAPI.bind_fcmtoken(params: bindFcmTokenRequestEntity);
+   await ChatAPI.bind_fcmtoken(params: bindFcmTokenRequestEntity);
     }
   }
 }
