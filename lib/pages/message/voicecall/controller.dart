@@ -123,11 +123,15 @@ class VoiceCallController extends GetxController {
     );
 
     String token = await getToken();
+    if (token.isEmpty) {
+      EasyLoading.dismiss();
+      Get.back();
+      return;
+    }
 
     await engine.joinChannel(
-      token:
-          '007eJxTYHA5+THMTuqE4panP01nO7dH2/UdCPdZ76BidMLDbJJGRZ0CQ7JBknmSuWmSsYWZsYmJSUqieapJYmpqiqWxuaWhYYpJwny71IZARoaNb8QYGKEQxBdgqEjMKklJKUpNqyjLyE3Jy2ZgAACW/SNW',
-      channelId: 'xajtddrefxvhmdnk',
+      token: token,
+      channelId: state.channelId.value,
       uid: 0,
       options: const ChannelMediaOptions(
         clientRoleType: ClientRoleType.clientRoleBroadcaster,
