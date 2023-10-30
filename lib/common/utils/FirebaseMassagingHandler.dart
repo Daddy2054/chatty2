@@ -14,8 +14,8 @@ import '../routes/names.dart';
 import '../store/store.dart';
 import '../values/values.dart';
 
-class FirebaseMassagingHandler {
-  FirebaseMassagingHandler._();
+class FirebaseMessagingHandler {
+  FirebaseMessagingHandler._();
   static AndroidNotificationChannel channel_call =
       const AndroidNotificationChannel(
     'com.example.chatty2.call', // id
@@ -41,7 +41,7 @@ class FirebaseMassagingHandler {
   static Future<void> config() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     try {
-   //   RemoteMessage newMessage = const RemoteMessage();
+      //   RemoteMessage newMessage = const RemoteMessage();
       await messaging.requestPermission(
         sound: true,
         badge: true,
@@ -59,7 +59,7 @@ class FirebaseMassagingHandler {
           print("initialMessage------");
         }
         if (kDebugMode) {
-            print(initialMessage);
+          print(initialMessage);
         }
       }
       var initializationSettingsAndroid =
@@ -82,7 +82,7 @@ class FirebaseMassagingHandler {
       FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
         if (kDebugMode) {
           print("\n notification on onMessage function \n");
-        print(message);
+          print(message);
         }
         _receiveNotification(message);
       });
@@ -132,7 +132,7 @@ class FirebaseMassagingHandler {
                               if (Get.isSnackbarOpen) {
                                 Get.closeAllSnackbars();
                               }
-                              FirebaseMassagingHandler._sendNotifications(
+                              FirebaseMessagingHandler._sendNotifications(
                                   "cancel",
                                   to_token,
                                   to_avatar,
@@ -217,7 +217,7 @@ class FirebaseMassagingHandler {
                               if (Get.isSnackbarOpen) {
                                 Get.closeAllSnackbars();
                               }
-                              FirebaseMassagingHandler._sendNotifications(
+                              FirebaseMessagingHandler._sendNotifications(
                                   "cancel",
                                   to_token,
                                   to_avatar,
@@ -265,7 +265,7 @@ class FirebaseMassagingHandler {
                       ))));
         }
       } else if (message.data["call_type"] == "cancel") {
-        FirebaseMassagingHandler.flutterLocalNotificationsPlugin.cancelAll();
+        FirebaseMessagingHandler.flutterLocalNotificationsPlugin.cancelAll();
 
         if (Get.isSnackbarOpen) {
           Get.closeAllSnackbars();
@@ -293,7 +293,7 @@ class FirebaseMassagingHandler {
     var res = await ChatAPI.call_notifications(params: callRequestEntity);
     if (kDebugMode) {
       print("sendNotifications");
-    print(res);
+      print(res);
     }
     if (res.code == 0) {
       if (kDebugMode) {
