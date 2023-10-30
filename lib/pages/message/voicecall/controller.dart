@@ -104,6 +104,9 @@ class VoiceCallController extends GetxController {
     }
     CallTokenRequestEntity callTokenRequestEntity = CallTokenRequestEntity();
     callTokenRequestEntity.channel_name = state.channelId.value;
+    if (kDebugMode) {
+      print('...channel id is ${state.channelId.value}');
+    }
     var res = await ChatAPI.call_token(params: callTokenRequestEntity);
     if (res.code == 0) {
       return res.data!;
