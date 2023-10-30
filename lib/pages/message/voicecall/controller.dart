@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:chatty/common/store/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -8,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../common/apis/apis.dart';
+import '../../../common/entities/entities.dart';
 import '../../../common/values/values.dart';
 import 'index.dart';
 
@@ -82,8 +87,28 @@ class VoiceCallController extends GetxController {
     );
     await joinChannel();
     if (state.call_role.value == 'anchor') {
+      //send notification to other user
       await player.play();
     }
+  }
+
+  Future<String> getToken() async {
+    if (state.call_role.value == 'anchor') {
+      state.channelId.value = md5
+          .convert(utf8.encode('${profile_token}_${state.to_token}'))
+          .toString();
+    } else {
+      state.channelId.value = md5
+          .convert(utf8.encode('${state.to_token}_$profile_token'))
+          .toString();
+    }
+     CallTokenRequestEntity callTokenRequestEntity = CallTokenRequestEntity();
+    callTokenRequestEntity.channel_name = state.channelId.value;
+    var res = await ChatAPI.call_token(params: callTokenRequestEntity);
+    if (res.code == 0) {
+      return res.data!;
+    }
+    return '';
   }
 
   Future<void> joinChannel() async {
@@ -93,6 +118,8 @@ class VoiceCallController extends GetxController {
       maskType: EasyLoadingMaskType.clear,
       dismissOnTap: true,
     );
+
+    String token = await getToken();
 
     await engine.joinChannel(
       token:

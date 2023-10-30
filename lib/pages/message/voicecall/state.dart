@@ -16,4 +16,5 @@ class VoiceCallState {
   //receiver is the audience
   //anchor is the caller
   var call_role = 'audience'.obs;
+  var channelId = ''.obs;
 }
