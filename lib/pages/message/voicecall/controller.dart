@@ -95,6 +95,7 @@ class VoiceCallController extends GetxController {
     }
   }
 
+  // ignore: non_constant_identifier_names
   Future<void> sendNotification(String call_type) async {
     CallRequestEntity callRequestEntity = CallRequestEntity();
     callRequestEntity.call_type = call_type;
@@ -102,7 +103,9 @@ class VoiceCallController extends GetxController {
     callRequestEntity.to_avatar = state.to_avatar.value;
     callRequestEntity.doc_id = state.doc_id.value;
     callRequestEntity.to_name = state.to_name.value;
-    print('...the other user token is ${state.to_token.value}');
+    if (kDebugMode) {
+      print('...the other user token is ${state.to_token.value}');
+    }
 
     var res = await ChatAPI.call_notifications(params: callRequestEntity);
     if (res.code == 0) {
