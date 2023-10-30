@@ -102,7 +102,7 @@ class VoiceCallController extends GetxController {
           .convert(utf8.encode('${state.to_token}_$profile_token'))
           .toString();
     }
-     CallTokenRequestEntity callTokenRequestEntity = CallTokenRequestEntity();
+    CallTokenRequestEntity callTokenRequestEntity = CallTokenRequestEntity();
     callTokenRequestEntity.channel_name = state.channelId.value;
     var res = await ChatAPI.call_token(params: callTokenRequestEntity);
     if (res.code == 0) {
