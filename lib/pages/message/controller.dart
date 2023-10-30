@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
 import '../../common/routes/routes.dart';
@@ -9,5 +10,15 @@ class MessageController extends GetxController {
 
   Future<void> goProfile() async {
     await Get.toNamed(AppRoutes.Profile);
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    firebaseMessageSetup();
+  }
+
+  firebaseMessageSetup() async {
+    String? fcmtoken = await FirebaseMessaging.instance.getToken();
   }
 }
