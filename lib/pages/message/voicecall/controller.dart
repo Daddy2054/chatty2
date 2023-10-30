@@ -34,6 +34,7 @@ class VoiceCallController extends GetxController {
     state.to_avatar.value = data['to_avatar'] ?? '';
     state.call_role.value = data['call_role'] ?? '';
     state.doc_id.value = data['doc_id'] ?? '';
+    state.to_token.value = data['to_token'] ?? '';
 
     if (kDebugMode) {
       print('...your name is ${state.to_name.value}');
@@ -101,16 +102,17 @@ class VoiceCallController extends GetxController {
     callRequestEntity.to_avatar = state.to_avatar.value;
     callRequestEntity.doc_id = state.doc_id.value;
     callRequestEntity.to_name = state.to_name.value;
-    var res =await ChatAPI.call_notifications(params: callRequestEntity);
-    if(res.code==0){
+    print('...the other user token is ${state.to_token.value}');
+
+    var res = await ChatAPI.call_notifications(params: callRequestEntity);
+    if (res.code == 0) {
       if (kDebugMode) {
         print('notification success');
       }
-    }else{
+    } else {
       if (kDebugMode) {
         print('could not send notification');
       }
-
     }
   }
 
