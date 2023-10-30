@@ -1,5 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names, file_names
 
+import 'dart:convert';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../firebase_options.dart';
 import '../apis/apis.dart';
 import '../entities/entities.dart';
 import '../routes/names.dart';
@@ -340,44 +344,45 @@ class FirebaseMessagingHandler {
   //   // PlascoRequests().initReport();
   // }
 
-/*
   @pragma('vm:entry-point')
   static Future<void> firebaseMessagingBackground(RemoteMessage message) async {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
-    print("message data: ${message.data}");
-    print("message data: ${message}");
-    print("message data: ${message.notification}");
-
-    if(message!=null){
-      if(message.data!=null && message.data["call_type"]!=null) {
-
-        if(message.data["call_type"]=="cancel"){
-            FirebaseMassagingHandler.flutterLocalNotificationsPlugin.cancelAll();
-          //  await setCallVocieOrVideo(false);
-            var _prefs = await SharedPreferences.getInstance();
-            await _prefs.setString("CallVocieOrVideo", "");
-        }
-        if(message.data["call_type"]=="voice" || message.data["call_type"]=="video"){
-
-          var data = {
-            "to_token":message.data["token"],
-            "to_name":message.data["name"],
-            "to_avatar":message.data["avatar"],
-            "doc_id":message.data["doc_id"]??"",
-            "call_type":message.data["call_type"],
-            "expire_time":DateTime.now().toString(),
-          };
-          print(data);
-          var _prefs = await SharedPreferences.getInstance();
-          await _prefs.setString("CallVocieOrVideo", jsonEncode(data));
-        }
-
-
-      }
-
-
-
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    if (kDebugMode) {
+      print("message data: ${message.data}");
+      print("message data: $message");
+      print("message data: ${message.notification}");
     }
 
-  }*/
+    // if(message!=null){
+    if (
+        //message.data!=null &&
+        message.data["call_type"] != null) {
+      if (message.data["call_type"] == "cancel") {
+        FirebaseMessagingHandler.flutterLocalNotificationsPlugin.cancelAll();
+        //  await setCallVocieOrVideo(false);
+        var _prefs = await SharedPreferences.getInstance();
+        await _prefs.setString("CallVocieOrVideo", "");
+      }
+      if (message.data["call_type"] == "voice" ||
+          message.data["call_type"] == "video") {
+        var data = {
+          "to_token": message.data["token"],
+          "to_name": message.data["name"],
+          "to_avatar": message.data["avatar"],
+          "doc_id": message.data["doc_id"] ?? "",
+          "call_type": message.data["call_type"],
+          "expire_time": DateTime.now().toString(),
+        };
+        if (kDebugMode) {
+          print(data);
+        }
+        var _prefs = await SharedPreferences.getInstance();
+        await _prefs.setString("CallVocieOrVideo", jsonEncode(data));
+      }
+    }
+
+    //  }
+  }
 }

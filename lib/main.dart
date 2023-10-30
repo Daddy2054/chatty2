@@ -1,5 +1,5 @@
 import 'package:chatty/common/style/style.dart';
-import 'package:chatty/common/utils/FirebaseMassagingHandler.dart';
+import 'package:chatty/common/utils/FirebaseMessagingHandler.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -13,9 +13,9 @@ import 'global.dart';
 Future<void> main() async {
   await Global.init();
   runApp(const MyApp());
-  // firebaseInit().whenComplete(() {
-  //   FirebaseMassagingHandler.config();
-  // });
+  firebaseChatInit().whenComplete(() {
+    FirebaseMessagingHandler.config();
+  });
 }
 
 Future firebaseChatInit() async {
@@ -27,7 +27,7 @@ Future firebaseChatInit() async {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()!
         .createNotificationChannel(FirebaseMessagingHandler.channel_call);
-   FirebaseMessagingHandler.flutterLocalNotificationsPlugin
+    FirebaseMessagingHandler.flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()!
         .createNotificationChannel(FirebaseMessagingHandler.channel_message);
