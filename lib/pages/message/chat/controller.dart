@@ -55,9 +55,9 @@ class ChatController extends GetxController {
 
   Future<void> sendMessage() async {
     String sendContent = myInputController.text;
-    if (kDebugMode) {
-      print('...$sendContent...');
-    }
+    // if (kDebugMode) {
+    //   print('...$sendContent...');
+    // }
     if (sendContent.isEmpty) {
       toastInfo(msg: 'content is empty');
     }
@@ -78,10 +78,16 @@ class ChatController extends GetxController {
             toFirestore: (Msgcontent msg, options) => msg.toFirestore())
         .add(content)
         .then((DocumentReference doc) {
-      if (kDebugMode) {
-        print('...base id is $doc_id, new message doc id is ${doc.id}');
+      // if (kDebugMode) {
+      //   print('...base id is $doc_id, new message doc id is ${doc.id}');
+      // }
         myInputController.clear();
-      }
     });
+    var list = await db.collection('message').get();
+    var listSub =
+        await db.collection('message').doc(doc_id).collection('msglist').get();
+    if (kDebugMode) {
+      print(listSub.docs);
+    }
   }
 }
