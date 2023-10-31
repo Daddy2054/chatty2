@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../common/routes/routes.dart';
@@ -12,6 +13,7 @@ class ChatController extends GetxController {
   final state = ChatState();
 
   late String doc_id;
+  final myInputController = TextEditingController();
 
   void goMore() {
     state.more_status.value = !state.more_status.value;
@@ -24,7 +26,7 @@ class ChatController extends GetxController {
       "to_name": state.to_name.value,
       'to_avatar': state.to_avatar.value,
       'call_role': 'anchor',
-      'doc_id':doc_id,
+      'doc_id': doc_id,
     });
   }
 
@@ -40,5 +42,9 @@ class ChatController extends GetxController {
     state.to_name.value = data['to_name'] ?? '';
     state.to_avatar.value = data['to_avatar'] ?? '';
     state.to_online.value = data['to_online'] ?? '1';
+  }
+
+  void sendMessage() {
+    print('you tapped me');
   }
 }

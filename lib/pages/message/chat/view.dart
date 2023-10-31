@@ -115,6 +115,7 @@ class ChatPage extends GetView<ChatController> {
                             SizedBox(
                               width: 220.w,
                               child: TextField(
+                                controller: controller.myInputController,
                                 keyboardType: TextInputType.multiline,
                                 autofocus: false,
                                 decoration: InputDecoration(
@@ -124,12 +125,18 @@ class ChatPage extends GetView<ChatController> {
                                     top: 0,
                                     bottom: 0,
                                   ),
+                                  // border: BorderSide.none,
                                   border: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
                                     ),
                                   ),
                                   focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
                                     ),
@@ -147,7 +154,9 @@ class ChatPage extends GetView<ChatController> {
                                 height: 40.w,
                                 child: Image.asset('assets/icons/send.png'),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                controller.sendMessage();
+                              },
                             ),
                           ],
                         ),
@@ -258,7 +267,6 @@ class ChatPage extends GetView<ChatController> {
                             ),
                             onTap: () {
                               controller.audioCall();
-
                             },
                           ),
                           GestureDetector(
