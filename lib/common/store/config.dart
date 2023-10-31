@@ -9,7 +9,7 @@ class ConfigStore extends GetxController {
   static ConfigStore get to => Get.find();
 
   bool isFirstOpen = false;
-  bool isCallVocie = false;
+  bool isCallVoice = false;
   PackageInfo? _platform;
   String get version => _platform?.version ?? '-';
   bool get isRelease => const bool.fromEnvironment("dart.vm.product");

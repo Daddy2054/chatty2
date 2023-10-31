@@ -109,6 +109,7 @@ class FirebaseMessagingHandler {
         var doc_id = data["doc_id"] ?? "";
         // var call_role= data["call_type"];
         if (to_token != null && to_name != null && to_avatar != null) {
+          //it shows the notification tray
           Get.snackbar(
               icon: Container(
                 width: 40.w,
@@ -137,11 +138,12 @@ class FirebaseMessagingHandler {
                                 Get.closeAllSnackbars();
                               }
                               FirebaseMessagingHandler._sendNotifications(
-                                  "cancel",
-                                  to_token,
-                                  to_avatar,
-                                  to_name,
-                                  doc_id);
+                                "cancel",
+                                to_token,
+                                to_avatar,
+                                to_name,
+                                doc_id,
+                              );
                             },
                             child: Container(
                               width: 40.w,
@@ -193,80 +195,77 @@ class FirebaseMessagingHandler {
         var doc_id = data["doc_id"] ?? "";
         // var call_role= data["call_type"];
         if (to_token != null && to_name != null && to_avatar != null) {
-          ConfigStore.to.isCallVocie = true;
+          ConfigStore.to.isCallVoice = true;
           Get.snackbar(
-              icon: Container(
-                width: 40.w,
-                height: 40.w,
-                padding: EdgeInsets.all(0.w),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fill, image: NetworkImage(to_avatar)),
-                  borderRadius: BorderRadius.all(Radius.circular(20.w)),
+            icon: Container(
+              width: 40.w,
+              height: 40.w,
+              padding: EdgeInsets.all(0.w),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.fill, image: NetworkImage(to_avatar)),
+                borderRadius: BorderRadius.all(Radius.circular(20.w)),
+              ),
+            ),
+            "$to_name",
+            "Video call",
+            duration: const Duration(seconds: 30),
+            isDismissible: false,
+            mainButton: TextButton(
+              onPressed: () {},
+              child: SizedBox(
+                width: 90.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        if (Get.isSnackbarOpen) {
+                          Get.closeAllSnackbars();
+                        }
+                        FirebaseMessagingHandler._sendNotifications(
+                            "cancel", to_token, to_avatar, to_name, doc_id);
+                      },
+                      child: Container(
+                        width: 40.w,
+                        height: 40.w,
+                        padding: EdgeInsets.all(10.w),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryElementBg,
+                          borderRadius: BorderRadius.all(Radius.circular(30.w)),
+                        ),
+                        child: Image.asset("assets/icons/a_phone.png"),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (Get.isSnackbarOpen) {
+                          Get.closeAllSnackbars();
+                        }
+                        Get.toNamed(AppRoutes.VideoCall, parameters: {
+                          "to_token": to_token,
+                          "to_name": to_name,
+                          "to_avatar": to_avatar,
+                          "doc_id": doc_id,
+                          "call_role": "audience"
+                        });
+                      },
+                      child: Container(
+                        width: 40.w,
+                        height: 40.w,
+                        padding: EdgeInsets.all(10.w),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryElementStatus,
+                          borderRadius: BorderRadius.all(Radius.circular(30.w)),
+                        ),
+                        child: Image.asset("assets/icons/a_telephone.png"),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              "$to_name",
-              "Video call",
-              duration: const Duration(seconds: 30),
-              isDismissible: false,
-              mainButton: TextButton(
-                  onPressed: () {},
-                  child: SizedBox(
-                      width: 90.w,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              if (Get.isSnackbarOpen) {
-                                Get.closeAllSnackbars();
-                              }
-                              FirebaseMessagingHandler._sendNotifications(
-                                  "cancel",
-                                  to_token,
-                                  to_avatar,
-                                  to_name,
-                                  doc_id);
-                            },
-                            child: Container(
-                              width: 40.w,
-                              height: 40.w,
-                              padding: EdgeInsets.all(10.w),
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryElementBg,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.w)),
-                              ),
-                              child: Image.asset("assets/icons/a_phone.png"),
-                            ),
-                          ),
-                          GestureDetector(
-                              onTap: () {
-                                if (Get.isSnackbarOpen) {
-                                  Get.closeAllSnackbars();
-                                }
-                                Get.toNamed(AppRoutes.VideoCall, parameters: {
-                                  "to_token": to_token,
-                                  "to_name": to_name,
-                                  "to_avatar": to_avatar,
-                                  "doc_id": doc_id,
-                                  "call_role": "audience"
-                                });
-                              },
-                              child: Container(
-                                width: 40.w,
-                                height: 40.w,
-                                padding: EdgeInsets.all(10.w),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryElementStatus,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30.w)),
-                                ),
-                                child:
-                                    Image.asset("assets/icons/a_telephone.png"),
-                              ))
-                        ],
-                      ))));
+            ),
+          );
         }
       } else if (message.data["call_type"] == "cancel") {
         FirebaseMessagingHandler.flutterLocalNotificationsPlugin.cancelAll();
@@ -281,7 +280,10 @@ class FirebaseMessagingHandler {
         }
 
         var _prefs = await SharedPreferences.getInstance();
-        await _prefs.setString("CallVocieOrVideo", "");
+        await _prefs.setString("CallVoiceOrVideo", "");
+        if (kDebugMode) {
+          print('...call notification was cancelled by remote user...');
+        }
       }
     }
   }
@@ -361,9 +363,9 @@ class FirebaseMessagingHandler {
         message.data["call_type"] != null) {
       if (message.data["call_type"] == "cancel") {
         FirebaseMessagingHandler.flutterLocalNotificationsPlugin.cancelAll();
-        //  await setCallVocieOrVideo(false);
+        //  await setCallVoiceOrVideo(false);
         var _prefs = await SharedPreferences.getInstance();
-        await _prefs.setString("CallVocieOrVideo", "");
+        await _prefs.setString("CallVoiceOrVideo", "");
       }
       if (message.data["call_type"] == "voice" ||
           message.data["call_type"] == "video") {
@@ -379,7 +381,7 @@ class FirebaseMessagingHandler {
           print(data);
         }
         var _prefs = await SharedPreferences.getInstance();
-        await _prefs.setString("CallVocieOrVideo", jsonEncode(data));
+        await _prefs.setString("CallVoiceOrVideo", jsonEncode(data));
       }
     }
 

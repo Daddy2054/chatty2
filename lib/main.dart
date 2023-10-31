@@ -23,8 +23,8 @@ Future firebaseChatInit() async {
       FirebaseMessagingHandler.firebaseMessagingBackground);
 
   if (GetPlatform.isAndroid) {
-    final AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    // final AndroidInitializationSettings initializationSettingsAndroid =
+    //     const AndroidInitializationSettings('@mipmap/ic_launcher');
     FirebaseMessagingHandler.flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()!
