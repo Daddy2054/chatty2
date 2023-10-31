@@ -81,13 +81,15 @@ class ChatController extends GetxController {
       // if (kDebugMode) {
       //   print('...base id is $doc_id, new message doc id is ${doc.id}');
       // }
-        myInputController.clear();
+      myInputController.clear();
     });
     var list = await db.collection('message').get();
     var listSub =
         await db.collection('message').doc(doc_id).collection('msglist').get();
-    if (kDebugMode) {
-      print(listSub.docs);
+    for (var element in listSub.docs) {
+      if (kDebugMode) {
+        print(element.data()['content']);
+      }
     }
   }
 }
