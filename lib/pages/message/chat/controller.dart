@@ -79,7 +79,8 @@ class ChatController extends GetxController {
         .add(content)
         .then((DocumentReference doc) {
       if (kDebugMode) {
-        print('...new message doc if is $doc.id');
+        print('...base id is $doc_id, new message doc id is ${doc.id}');
+        myInputController.clear();
       }
     });
   }
