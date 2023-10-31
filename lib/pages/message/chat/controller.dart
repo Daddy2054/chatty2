@@ -83,13 +83,12 @@ class ChatController extends GetxController {
       // }
       myInputController.clear();
     });
-    var list = await db.collection('message').get();
-    var listSub =
-        await db.collection('message').doc(doc_id).collection('msglist').get();
-    for (var element in listSub.docs) {
-      if (kDebugMode) {
-        print(element.data()['content']);
-      }
-    }
+
+    await db.collection('chat').add({
+      'field': 'this is a text',
+      'field2': 340,
+    }).then((DocumentReference doc) {
+      print('...${doc.id}');
+    });
   }
 }
