@@ -84,11 +84,16 @@ class ChatController extends GetxController {
       myInputController.clear();
     });
 
-    await db.collection('chat').add({
-      'field': 'this is a text',
-      'field2': 340,
-    }).then((DocumentReference doc) {
-      print('...${doc.id}');
-    });
+    var messageResult = await db
+        .collection('message')
+        .doc(doc_id)
+        .withConverter(
+            fromFirestore: Msg.fromFirestore,
+            toFirestore: (Msg msg, options) => msg.toFirestore())
+        .get();
+
+    if (messageResult.data() != null) {
+      var item = messageResult.data();
+    }
   }
 }
