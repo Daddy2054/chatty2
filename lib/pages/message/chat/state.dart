@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../common/entities/entities.dart';
 
 class ChatState {
+  //for holding our data ffom firebase firestore 
   RxList<Msgcontent> msgcontentList = <Msgcontent>[].obs;
 
   var to_token = ''.obs;

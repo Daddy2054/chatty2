@@ -23,6 +23,7 @@ class ChatController extends GetxController {
 
 //firebase data instance
   final db = FirebaseFirestore.instance;
+  var listener;
 
   void goMore() {
     state.more_status.value = !state.more_status.value;
@@ -53,39 +54,32 @@ class ChatController extends GetxController {
     state.to_online.value = data['to_online'] ?? '1';
   }
 
-  Future<void> sendMessage() async {
-    //var list =
-    await db.collection('people').add({
-      'name': myInputController.text,
-      'age': 35,
-      'addtime': Timestamp.now(),
-    });
-
-    var mylist = db
-        .collection('people')
-        .orderBy('addtime', descending: true)
-        //    .limit(3)
-        .snapshots();
-
-    mylist.listen((event) {
-      for (var change in event.docChanges) {
-        switch (change.type) {
-          case DocumentChangeType.added:
-            // TODO: Handle this case.
-            print('...added a document object ${change.doc.id}');
-          case DocumentChangeType.modified:
-            // TODO: Handle this case.
-            print('...changed value  ${change.doc["age"]}');
-          case DocumentChangeType.removed:
-          // TODO: Handle this case.
-        }
+  @override
+  void onReady() {
+    super.onReady();
+    state.msgcontentList.clear();
+    final messages = db
+        .collection('message')
+        .doc(doc_id)
+        .collection('msglist')
+        .withConverter(
+          fromFirestore: Msgcontent.fromFirestore,
+          toFirestore: (Msgcontent msg, options) => msg.toFirestore(),
+        )
+        .orderBy(
+          'addtime',
+          descending: true,
+        )
+        .limit(15);
+    listener = messages.snapshots().listen((event) {
+      List<Msgcontent> tempMsgList = <Msgcontent>[];
+      for(var change in event.docChanges){
+        
       }
     });
+  }
 
-    // mylist.docs.forEach((element) {
-    //   print(element['addtime']);
-    // });
-
+  Future<void> sendMessage() async {
     String sendContent = myInputController.text;
     // if (kDebugMode) {
     //   print('...$sendContent...');
