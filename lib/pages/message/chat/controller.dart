@@ -92,8 +92,22 @@ class ChatController extends GetxController {
             toFirestore: (Msg msg, options) => msg.toFirestore())
         .get();
 
+//to know if we have any unread messages or calls
     if (messageResult.data() != null) {
-      var item = messageResult.data();
+      var item = messageResult.data()!;
+      int to_msg_num = item.to_msg_num == null ? 0 : item.to_msg_num!;
+      int from_msg_num = item.from_msg_num == null ? 0 : item.from_msg_num!;
+      if (item.from_token == token) {
+        from_msg_num = from_msg_num + 1;
+      } else {
+        to_msg_num = to_msg_num + 1;
+      }
+      await db.collection('message').doc(doc_id).update({
+        'to_msg_num': to_msg_num,
+        'from_msg_num': from_msg_num,
+        'last_msg': sendContent,
+        'last_time':Timestamp.now(),
+      });
     }
   }
 }
