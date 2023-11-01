@@ -54,20 +54,37 @@ class ChatController extends GetxController {
   }
 
   Future<void> sendMessage() async {
-    var list = await db.collection('people').add({
+    //var list =
+    await db.collection('people').add({
       'name': myInputController.text,
       'age': 35,
       'addtime': Timestamp.now(),
     });
 
-    var mylist = await db
+    var mylist = db
         .collection('people')
         .orderBy('addtime', descending: true)
-        .limit(3)
-        .get();
-    mylist.docs.forEach((element) {
-      print(element['addtime']);
+        //    .limit(3)
+        .snapshots();
+
+    mylist.listen((event) {
+      for (var change in event.docChanges) {
+        switch (change.type) {
+          case DocumentChangeType.added:
+            // TODO: Handle this case.
+            print('...added a document object ${change.doc.id}');
+          case DocumentChangeType.modified:
+            // TODO: Handle this case.
+            print('...changed value  ${change.doc["age"]}');
+          case DocumentChangeType.removed:
+          // TODO: Handle this case.
+        }
+      }
     });
+
+    // mylist.docs.forEach((element) {
+    //   print(element['addtime']);
+    // });
 
     String sendContent = myInputController.text;
     // if (kDebugMode) {
