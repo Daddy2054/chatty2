@@ -54,6 +54,21 @@ class ChatController extends GetxController {
   }
 
   Future<void> sendMessage() async {
+    var list = await db.collection('people').add({
+      'name': myInputController.text,
+      'age': 35,
+      'addtime': Timestamp.now(),
+    });
+
+    var mylist = await db
+        .collection('people')
+        .orderBy('addtime', descending: true)
+        .limit(3)
+        .get();
+    mylist.docs.forEach((element) {
+      print(element['addtime']);
+    });
+
     String sendContent = myInputController.text;
     // if (kDebugMode) {
     //   print('...$sendContent...');
@@ -106,7 +121,7 @@ class ChatController extends GetxController {
         'to_msg_num': to_msg_num,
         'from_msg_num': from_msg_num,
         'last_msg': sendContent,
-        'last_time':Timestamp.now(),
+        'last_time': Timestamp.now(),
       });
     }
   }
