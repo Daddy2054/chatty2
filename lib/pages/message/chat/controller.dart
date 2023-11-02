@@ -24,7 +24,7 @@ class ChatController extends GetxController {
 
 //firebase data instance
   final db = FirebaseFirestore.instance;
-  var listener;
+   dynamic listener;
   var isLoadmore = true;
   ScrollController myScrollController = ScrollController();
 
@@ -92,7 +92,8 @@ class ChatController extends GetxController {
         }
       }
       for (var element in tempMsgList.reversed) {
-        state.msgcontentList.value.insert(0, element);
+        //state.msgcontentList.value.insert(0, element);
+        state.msgcontentList.insert(0, element);
       }
 
       state.msgcontentList.refresh();
@@ -109,17 +110,19 @@ class ChatController extends GetxController {
       });
     });
 
-    // myScrollController.addListener(() {
-    //   if((myScrollController.offset+10)>(myScrollController.position.maxScrollExtent)){
-    //     if(isLoadmore){
-    //       state.isloading.value = true;
-    //       //to stop unnecessary reauest to firaasebase
-    //       isLoadmore = false;
-    //       asyncLoadMoreData();
-    //       print("...loading...");
-    //     }
-    //   }
-    // });
+    myScrollController.addListener(() {
+      if((myScrollController.offset+10)>(myScrollController.position.maxScrollExtent)){
+        if(isLoadmore){
+          state.isLoading.value = true;
+          //to stop unnecessary request to firebase
+          isLoadmore = false;
+          asyncLoadMoreData();
+          if (kDebugMode) {
+            print("...loading...");
+          }
+        }
+      }
+    });
   }
 
   Future<void> asyncLoadMoreData() async {
@@ -133,18 +136,22 @@ class ChatController extends GetxController {
         .orderBy("addtime", descending: true)
         .where(
           'addtime',
-          isLessThan: state.msgcontentList.value.last.addtime,
+//          isLessThan: state.msgcontentList.value.last.addtime,
+          isLessThan: state.msgcontentList.last.addtime,
         )
         .limit(10)
         .get();
 
     if (messages.docs.isNotEmpty) {
-      messages.docs.forEach((element) {
+      for (var element in messages.docs) {
         var data = element.data();
-        state.msgcontentList.value.add(data);
-      });
-      print(state.msgcontentList.value.length);
-      print(state.msgcontentList.length);
+    //    state.msgcontentList.value.add(data);
+        state.msgcontentList.add(data);
+      }
+//      print(state.msgcontentList.value.length);
+      if (kDebugMode) {
+        print('msgcontentList.length: ${state.msgcontentList.length}');
+      }
     }
 
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
