@@ -1,10 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatty/common/entities/entities.dart';
 import 'package:chatty/common/values/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../common/values/server.dart';
+
 Widget chatRightList(Msgcontent item) {
+  var imagePath = '${SERVER_API_URL}uploads/boxed-bg.png';
+  if (item.type == "image") {
+    imagePath = '${SERVER_API_URL}uploads/${item.content!}';
+  }
   return Container(
     padding: EdgeInsets.symmetric(
       vertical: 10.w,
@@ -46,8 +53,16 @@ Widget chatRightList(Msgcontent item) {
                           color: AppColors.primaryElementText,
                         ),
                       )
-                    : const Text('image'),
-              )
+                    : ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 90.w),
+                        child: GestureDetector(
+                          child: CachedNetworkImage(
+                            imageUrl: imagePath,
+                          ),
+                          onTap: () {},
+                        ),
+                      ),
+              ),
             ],
           ),
         ),
