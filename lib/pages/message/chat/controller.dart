@@ -99,6 +99,8 @@ class ChatController extends GetxController {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         if (myScrollController.hasClients) {
           myScrollController.animateTo(
+            //top to the very top of your list
+            //lowest index is 0
             myScrollController.position.minScrollExtent,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeOut,
