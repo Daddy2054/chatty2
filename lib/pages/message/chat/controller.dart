@@ -24,7 +24,7 @@ class ChatController extends GetxController {
 
 //firebase data instance
   final db = FirebaseFirestore.instance;
-   dynamic listener;
+  dynamic listener;
   var isLoadmore = true;
   ScrollController myScrollController = ScrollController();
 
@@ -111,8 +111,9 @@ class ChatController extends GetxController {
     });
 
     myScrollController.addListener(() {
-      if((myScrollController.offset+10)>(myScrollController.position.maxScrollExtent)){
-        if(isLoadmore){
+      if ((myScrollController.offset + 10) >
+          (myScrollController.position.maxScrollExtent)) {
+        if (isLoadmore) {
           state.isLoading.value = true;
           //to stop unnecessary request to firebase
           isLoadmore = false;
@@ -145,7 +146,7 @@ class ChatController extends GetxController {
     if (messages.docs.isNotEmpty) {
       for (var element in messages.docs) {
         var data = element.data();
-    //    state.msgcontentList.value.add(data);
+        //    state.msgcontentList.value.add(data);
         state.msgcontentList.add(data);
       }
 //      print(state.msgcontentList.value.length);
