@@ -5,6 +5,7 @@ import 'package:chatty/common/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 
 import '../../../common/entities/entities.dart';
@@ -24,6 +25,8 @@ class ChatController extends GetxController {
 //firebase data instance
   final db = FirebaseFirestore.instance;
   var listener;
+
+  ScrollController myScrollController = ScrollController();
 
   void goMore() {
     state.more_status.value = !state.more_status.value;
@@ -79,8 +82,8 @@ class ChatController extends GetxController {
           case DocumentChangeType.added:
             if (change.doc.data() != null) {
               tempMsgList.add(change.doc.data()!);
-              print('${change.doc.data()!}');
-              print('...newly added ${myInputController.text}');
+              // print('${change.doc.data()!}');
+              // print('...newly added ${myInputController.text}');
             }
           case DocumentChangeType.modified:
           // TODO: Handle this case.
@@ -93,7 +96,28 @@ class ChatController extends GetxController {
       }
 
       state.msgcontentList.refresh();
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        if (myScrollController.hasClients) {
+          myScrollController.animateTo(
+            myScrollController.position.minScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      });
     });
+
+    // myScrollController.addListener(() {
+    //   if((myScrollController.offset+10)>(myScrollController.position.maxScrollExtent)){
+    //     if(isLoadmore){
+    //       state.isloading.value = true;
+    //       //to stop unnecessary reauest to firaasebase
+    //       isLoadmore = false;
+    //       asyncLoadMoreData();
+    //       print("...loading...");
+    //     }
+    //   }
+    // });
   }
 
   Future<void> sendMessage() async {
@@ -159,5 +183,6 @@ class ChatController extends GetxController {
     super.onClose();
     listener.cancel();
     myInputController.dispose();
+    myScrollController.dispose();
   }
 }

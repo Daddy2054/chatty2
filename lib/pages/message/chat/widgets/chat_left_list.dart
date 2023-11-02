@@ -25,7 +25,7 @@ Widget chatLeftList(Msgcontent item) {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.primaryElement,
+                  color: AppColors.primaryElementBg,
                   borderRadius: BorderRadius.all(
                     Radius.circular(
                       5.w,

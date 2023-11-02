@@ -18,6 +18,7 @@ class ChatList extends GetView<ChatController> {
           bottom: 70.h,
         ),
         child: CustomScrollView(
+          controller: controller.myScrollController,
           reverse: true,
           slivers: [
             SliverToBoxAdapter(
