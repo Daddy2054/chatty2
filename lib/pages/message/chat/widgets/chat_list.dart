@@ -43,6 +43,20 @@ class ChatList extends GetView<ChatController> {
                 ),
               ),
             ),
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                vertical: 0.w,
+                horizontal: 0.w,
+              ),
+              sliver: SliverToBoxAdapter(
+                child: controller.state.isLoading.value
+                    ? const Align(
+                        alignment: Alignment.center,
+                        child: Text('loading...'),
+                      )
+                    : Container(),
+              ),
+            ),
           ],
         ),
       ),
