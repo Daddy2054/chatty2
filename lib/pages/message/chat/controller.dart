@@ -73,8 +73,17 @@ class ChatController extends GetxController {
         .limit(15);
     listener = messages.snapshots().listen((event) {
       List<Msgcontent> tempMsgList = <Msgcontent>[];
-      for(var change in event.docChanges){
-        
+      for (var change in event.docChanges) {
+        switch (change.type) {
+          case DocumentChangeType.added:
+            if (change.doc.data() != null) {
+              tempMsgList.add(change.doc.data()!);
+            }
+          case DocumentChangeType.modified:
+          // TODO: Handle this case.
+          case DocumentChangeType.removed:
+          // TODO: Handle this case.
+        }
       }
     });
   }
