@@ -84,6 +84,10 @@ class ChatController extends GetxController {
           case DocumentChangeType.removed:
           // TODO: Handle this case.
         }
+        tempMsgList.reversed.forEach((element) {
+          state.msgcontentList.value.insert(0, element);
+        });
+        state.msgcontentList.refresh();
       }
     });
   }
