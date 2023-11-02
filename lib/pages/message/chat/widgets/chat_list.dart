@@ -19,6 +19,9 @@ class ChatList extends GetView<ChatController> {
         child: CustomScrollView(
           reverse: true,
           slivers: [
+            SliverToBoxAdapter(
+              child: Container(),
+            ),
             SliverPadding(
               padding: EdgeInsets.symmetric(
                 vertical: 0.w,

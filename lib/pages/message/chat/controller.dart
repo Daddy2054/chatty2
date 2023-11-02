@@ -71,6 +71,7 @@ class ChatController extends GetxController {
           descending: true,
         )
         .limit(15);
+
     listener = messages.snapshots().listen((event) {
       List<Msgcontent> tempMsgList = <Msgcontent>[];
       for (var change in event.docChanges) {
@@ -86,11 +87,12 @@ class ChatController extends GetxController {
           case DocumentChangeType.removed:
           // TODO: Handle this case.
         }
-        for (var element in tempMsgList.reversed) {
-          state.msgcontentList.value.insert(0, element);
-        }
-        state.msgcontentList.refresh();
       }
+      for (var element in tempMsgList.reversed) {
+        state.msgcontentList.value.insert(0, element);
+      }
+
+      state.msgcontentList.refresh();
     });
   }
 

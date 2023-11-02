@@ -83,7 +83,7 @@ class ChatPage extends GetView<ChatController> {
         () => SafeArea(
           child: Stack(
             children: [
-              ChatList(),
+              const ChatList(),
               Positioned(
                 bottom: 0.h,
                 child: Container(
