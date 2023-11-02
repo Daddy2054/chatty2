@@ -78,15 +78,17 @@ class ChatController extends GetxController {
           case DocumentChangeType.added:
             if (change.doc.data() != null) {
               tempMsgList.add(change.doc.data()!);
+              print('${change.doc.data()!}');
+              print('...newly added ${myInputController.text}');
             }
           case DocumentChangeType.modified:
           // TODO: Handle this case.
           case DocumentChangeType.removed:
           // TODO: Handle this case.
         }
-        tempMsgList.reversed.forEach((element) {
+        for (var element in tempMsgList.reversed) {
           state.msgcontentList.value.insert(0, element);
-        });
+        }
         state.msgcontentList.refresh();
       }
     });
@@ -148,5 +150,12 @@ class ChatController extends GetxController {
         'last_time': Timestamp.now(),
       });
     }
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    listener.cancel();
+    myInputController.dispose();
   }
 }
