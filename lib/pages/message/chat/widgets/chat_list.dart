@@ -1,4 +1,5 @@
 import 'package:chatty/pages/message/chat/index.dart';
+import 'package:chatty/pages/message/chat/widgets/chat_right_list.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,10 +17,21 @@ class ChatList extends GetView<ChatController> {
                   vertical: 0.w,
                   horizontal: 0.w,
                 ),
-                sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) => null)),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      var item = controller.state.msgcontentList[index];
+                      if (controller.token == item.token) {
+                        //user token with msglist token
+                        return ChatRightList(item);
+                      }
+                    },
+                    childCount: controller.state.msgcontentList.length,
+                  ),
+                ),
               ),
             ],
           ),
-        ));
+        ),);
   }
 }
