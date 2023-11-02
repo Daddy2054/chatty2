@@ -1,5 +1,6 @@
 import 'package:chatty/common/values/values.dart';
 import 'package:chatty/pages/message/chat/index.dart';
+import 'package:chatty/pages/message/chat/widgets/chat_left_list.dart';
 import 'package:chatty/pages/message/chat/widgets/chat_right_list.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,9 +34,9 @@ class ChatList extends GetView<ChatController> {
                     var item = controller.state.msgcontentList[index];
                     if (controller.token == item.token) {
                       //user token with msglist token
-                      return ChatRightList(item);
+                      return chatRightList(item);
                     }
-                    return null;
+                    return chatLeftList(item);
                   },
                   childCount: controller.state.msgcontentList.length,
                 ),

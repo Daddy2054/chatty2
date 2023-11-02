@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Widget ChatRightList(Msgcontent item) {
+Widget chatRightList(Msgcontent item) {
   return Container(
     padding: EdgeInsets.symmetric(
       vertical: 10.w,
