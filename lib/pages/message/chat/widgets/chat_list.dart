@@ -1,3 +1,4 @@
+import 'package:chatty/common/values/values.dart';
 import 'package:chatty/pages/message/chat/index.dart';
 import 'package:chatty/pages/message/chat/widgets/chat_right_list.dart';
 import 'package:flutter/widgets.dart';
@@ -9,29 +10,37 @@ class ChatList extends GetView<ChatController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Container(
-          child: CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 0.w,
-                  horizontal: 0.w,
-                ),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      var item = controller.state.msgcontentList[index];
-                      if (controller.token == item.token) {
-                        //user token with msglist token
-                        return ChatRightList(item);
-                      }
-                    },
-                    childCount: controller.state.msgcontentList.length,
-                  ),
+    return Obx(
+      () => Container(
+        color: AppColors.primaryBackground,
+        padding: EdgeInsets.only(
+          bottom: 70.h,
+        ),
+        child: CustomScrollView(
+          reverse: true,
+          slivers: [
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                vertical: 0.w,
+                horizontal: 0.w,
+              ),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    var item = controller.state.msgcontentList[index];
+                    if (controller.token == item.token) {
+                      //user token with msglist token
+                      return ChatRightList(item);
+                    }
+                    return null;
+                  },
+                  childCount: controller.state.msgcontentList.length,
                 ),
               ),
-            ],
-          ),
-        ),);
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
