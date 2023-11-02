@@ -25,7 +25,7 @@ class ChatController extends GetxController {
 //firebase data instance
   final db = FirebaseFirestore.instance;
   var listener;
-
+  var isLoadmore = true;
   ScrollController myScrollController = ScrollController();
 
   void goMore() {
@@ -120,6 +120,37 @@ class ChatController extends GetxController {
     //     }
     //   }
     // });
+  }
+
+  Future<void> asyncLoadMoreData() async {
+    final messages = await db
+        .collection("message")
+        .doc(doc_id)
+        .collection("msglist")
+        .withConverter(
+            fromFirestore: Msgcontent.fromFirestore,
+            toFirestore: (Msgcontent msg, options) => msg.toFirestore())
+        .orderBy("addtime", descending: true)
+        .where(
+          'addtime',
+          isLessThan: state.msgcontentList.value.last.addtime,
+        )
+        .limit(10)
+        .get();
+
+    if (messages.docs.isNotEmpty) {
+      messages.docs.forEach((element) {
+        var data = element.data();
+        state.msgcontentList.value.add(data);
+      });
+      print(state.msgcontentList.value.length);
+      print(state.msgcontentList.length);
+    }
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      isLoadmore = true;
+    });
+    state.isLoading.value = false;
   }
 
   Future<void> sendMessage() async {
