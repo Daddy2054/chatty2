@@ -101,10 +101,86 @@ class MessagePage extends GetView<MessageController> {
 
   Widget _headTabs() {
     return Container(
-      height: 70,
-      width: 300,
-      color: Colors.red,
-    );
+        height: 48,
+        width: 320,
+        decoration: const BoxDecoration(
+          color: AppColors.primarySecondaryBackground,
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
+          ),
+        ),
+        padding: EdgeInsets.all(4.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              child: Container(
+                width: 150.w,
+                height: 40.h,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryBackground,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      spreadRadius: 2,
+                      blurRadius: 3,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Call',
+                      style: TextStyle(
+                        color: AppColors.primaryThreeElementText,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              child: Container(
+                width: 150.w,
+                height: 40.h,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryBackground,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      spreadRadius: 2,
+                      blurRadius: 3,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Chat',
+                      style: TextStyle(
+                        color: AppColors.primaryThreeElementText,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 
   @override
