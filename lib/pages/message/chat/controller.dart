@@ -154,7 +154,7 @@ class ChatController extends GetxController {
       print(result.data);
     }
     if (result.code == 0) {
-          sendImageMessage(result.data!);
+      sendImageMessage(result.data!);
     } else {
       toastInfo(msg: "sending image error");
     }
@@ -232,10 +232,7 @@ class ChatController extends GetxController {
       } else {
         to_msg_num = to_msg_num + 1;
       }
-      await db
-      .collection("message")
-      .doc(doc_id)
-      .update({
+      await db.collection("message").doc(doc_id).update({
         "to_msg_num": to_msg_num,
         "from_msg_num": from_msg_num,
         "last_msg": "【image】",
@@ -308,5 +305,10 @@ class ChatController extends GetxController {
     listener.cancel();
     myInputController.dispose();
     myScrollController.dispose();
+  }
+
+  void closeAllPop() async {
+    Get.focusScope?.unfocus();
+    state.more_status.value = false;
   }
 }
