@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../common/apis/apis.dart';
 import '../../common/routes/routes.dart';
+import '../../common/store/store.dart';
 import 'state.dart';
 
 class MessageController extends GetxController {
@@ -21,6 +22,18 @@ class MessageController extends GetxController {
     firebaseMessageSetup();
   }
 
+  Future<void> getProfile() async {
+    var profile = await UserStore.to.profile;
+    state.head_detail.value = profile;
+    state.head_detail.refresh();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getProfile();
+  }
+
   firebaseMessageSetup() async {
     String? fcmToken = await FirebaseMessaging.instance.getToken();
     if (kDebugMode) {
@@ -30,7 +43,7 @@ class MessageController extends GetxController {
       BindFcmTokenRequestEntity bindFcmTokenRequestEntity =
           BindFcmTokenRequestEntity();
       bindFcmTokenRequestEntity.fcmtoken = fcmToken;
-   await ChatAPI.bind_fcmtoken(params: bindFcmTokenRequestEntity);
+      await ChatAPI.bind_fcmtoken(params: bindFcmTokenRequestEntity);
     }
   }
 }
