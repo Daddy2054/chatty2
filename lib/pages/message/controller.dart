@@ -1,6 +1,8 @@
 import 'package:chatty/common/entities/base.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import '../../common/apis/apis.dart';
@@ -17,6 +19,19 @@ class MessageController extends GetxController {
       AppRoutes.Profile,
       arguments: state.head_detail.value,
     );
+  }
+
+  goTabStatus() {
+    EasyLoading.show(
+        indicator: const CircularProgressIndicator(),
+        maskType: EasyLoadingMaskType.clear,
+        dismissOnTap: true);
+    state.tabStatus.value = !state.tabStatus.value;
+    if (state.tabStatus.value) {
+      //  asyncLoadMsgData();
+    } else {}
+
+    EasyLoading.dismiss();
   }
 
   @override
