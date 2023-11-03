@@ -32,7 +32,7 @@ class MessageController extends GetxController {
         dismissOnTap: true);
     state.tabStatus.value = !state.tabStatus.value;
     if (state.tabStatus.value) {
-       asyncLoadMsgData();
+      asyncLoadMsgData();
     } else {}
 
     EasyLoading.dismiss();
@@ -125,6 +125,29 @@ class MessageController extends GetxController {
   void onInit() {
     super.onInit();
     getProfile();
+    _snapShots();
+  }
+
+  _snapShots() {
+    var token = UserStore.to.profile.token;
+    final toMessageRef = db.collection("message")
+      ..withConverter(
+              fromFirestore: Msg.fromFirestore,
+              toFirestore: (Msg msg, options) => msg.toFirestore())
+          .where("to_token", isEqualTo: token);
+    final fromMessageRef = db.collection("message")
+      ..withConverter(
+              fromFirestore: Msg.fromFirestore,
+              toFirestore: (Msg msg, options) => msg.toFirestore())
+          .where("from_token", isEqualTo: token);
+
+    toMessageRef.snapshots().listen((event) {
+      asyncLoadMsgData();
+    });
+
+    fromMessageRef.snapshots().listen((event) {
+      asyncLoadMsgData();
+    });
   }
 
   firebaseMessageSetup() async {
