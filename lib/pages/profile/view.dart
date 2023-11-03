@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatty/common/values/values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -68,24 +69,36 @@ class ProfilePage extends GetView<ProfileController> {
             ),
           ],
         ),
-        child: Image(
-          height: 120.w,
-          width: 120.w,
-          image: const AssetImage(
-            'assets/images/account_header.png',
-          ),
-        ),
-        // child: CachedNetworkImage(
-        //   imageUrl: controller.state.profile_detail.value.avatar!,
-        //   height: 120.w,
-        //   width: 120.w,
-        //   imageBuilder: (context, imageProvider) => Container(
-        //     decoration: BoxDecoration(
-        //       borderRadius: BorderRadius.all(Radius.circular(60.w)),
-        //       image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
-        //     ),
-        //   ),
-        // ),
+        child: controller.state.profile_detail.value.avatar != null
+            ? CachedNetworkImage(
+                imageUrl: controller.state.profile_detail.value.avatar!,
+                height: 120.h,
+                width: 120.w,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        60.w,
+                      ),
+                    ),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => const Image(
+                  image: AssetImage(
+                    'assets/images/account_header.png',
+                  ),
+                ),
+              )
+            : Image(
+                width: 120.w,
+                height: 120.h,
+                fit: BoxFit.cover,
+                image: const AssetImage("assets/images/account_header.png"),
+              ),
       ),
       Positioned(
           bottom: 50.w,
@@ -151,51 +164,52 @@ class ProfilePage extends GetView<ProfileController> {
 
   Widget _buildLogoutBtn() {
     return GestureDetector(
-        child: Container(
-          width: 295.w,
-          height: 44.h,
-          margin: EdgeInsets.only(top: 0.h, bottom: 30.h),
-          padding: EdgeInsets.all(0.h),
-          decoration: BoxDecoration(
-            color: AppColors.primarySecondaryElementText,
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
-                spreadRadius: 1,
-                blurRadius: 2,
-                offset: const Offset(0, 1), // changes position of shadow
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Logout",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.primaryElementText,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14.sp,
-                ),
-              ),
-            ],
-          ),
+      child: Container(
+        width: 295.w,
+        height: 44.h,
+        margin: EdgeInsets.only(top: 0.h, bottom: 30.h),
+        padding: EdgeInsets.all(0.h),
+        decoration: BoxDecoration(
+          color: AppColors.primarySecondaryElementText,
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 1), // changes position of shadow
+            ),
+          ],
         ),
-        onTap: () {
-          Get.defaultDialog(
-            title: "Are you sure to log out?",
-            content: Container(),
-            onConfirm: () {
-              controller.goLogout();
-            },
-            onCancel: () {},
-            textConfirm: "Confirm",
-            textCancel: "Cancel",
-            confirmTextColor: Colors.white,
-          );
-        },);
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Logout",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primaryElementText,
+                fontWeight: FontWeight.normal,
+                fontSize: 14.sp,
+              ),
+            ),
+          ],
+        ),
+      ),
+      onTap: () {
+        Get.defaultDialog(
+          title: "Are you sure to log out?",
+          content: Container(),
+          onConfirm: () {
+            controller.goLogout();
+          },
+          onCancel: () {},
+          textConfirm: "Confirm",
+          textCancel: "Cancel",
+          confirmTextColor: Colors.white,
+        );
+      },
+    );
   }
 
   Widget _buildNameInput() {

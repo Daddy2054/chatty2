@@ -13,7 +13,10 @@ class MessageController extends GetxController {
   final state = MessageState();
 
   Future<void> goProfile() async {
-    await Get.toNamed(AppRoutes.Profile);
+    await Get.toNamed(
+      AppRoutes.Profile,
+      arguments: state.head_detail.value,
+    );
   }
 
   @override
@@ -23,7 +26,7 @@ class MessageController extends GetxController {
   }
 
   Future<void> getProfile() async {
-    var profile = await UserStore.to.profile;
+    var profile = UserStore.to.profile;
     state.head_detail.value = profile;
     state.head_detail.refresh();
   }
