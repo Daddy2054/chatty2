@@ -297,7 +297,7 @@ class MessagePage extends GetView<MessageController> {
                               fontFamily: "Avenir",
                               fontWeight: FontWeight.normal,
                               color: AppColors.primaryElementText,
-                              fontSize: 11.sp),
+                              fontSize: 11.sp,),
                         ),
                         item.msg_num == 0
                             ? Container()
@@ -318,15 +318,15 @@ class MessagePage extends GetView<MessageController> {
                                       fontFamily: "Avenir",
                                       fontWeight: FontWeight.normal,
                                       color: AppColors.primaryElementText,
-                                      fontSize: 11.sp),
+                                      fontSize: 11.sp,),
                                 ),
-                              )
+                              ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
