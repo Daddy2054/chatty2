@@ -257,97 +257,95 @@ class MessagePage extends GetView<MessageController> {
                       ),
                     ),
             ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 175.w,
-                    height: 44.w,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${item.name}",
-                          overflow: TextOverflow.clip,
-                          maxLines: 1,
-                          softWrap: false,
-                          style: TextStyle(
-                            fontFamily: "Avenir",
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.thirdElement,
-                            fontSize: 14.sp,
-                          ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 175.w,
+                  height: 44.w,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${item.name}",
+                        overflow: TextOverflow.clip,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: TextStyle(
+                          fontFamily: "Avenir",
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.thirdElement,
+                          fontSize: 14.sp,
                         ),
-                        Text(
-                          "${item.last_msg}",
-                          overflow: TextOverflow.clip,
-                          maxLines: 1,
-                          softWrap: false,
-                          style: TextStyle(
-                            fontFamily: "Avenir",
-                            fontWeight: FontWeight.normal,
-                            color: AppColors.primarySecondaryElementText,
-                            fontSize: 12.sp,
-                          ),
+                      ),
+                      Text(
+                        "${item.last_msg}",
+                        overflow: TextOverflow.clip,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: TextStyle(
+                          fontFamily: "Avenir",
+                          fontWeight: FontWeight.normal,
+                          color: AppColors.primarySecondaryElementText,
+                          fontSize: 12.sp,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: 86.w,
-                    height: 44.w,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          //  '',
-                          item.last_time == null
-                              ? ""
-                              : duTimeLineFormat(
-                                  (item.last_time as Timestamp).toDate(),
-                                ),
-                          maxLines: 1,
-                          softWrap: false,
-                          style: TextStyle(
-                            fontFamily: "Avenir",
-                            fontWeight: FontWeight.normal,
+                ),
+                SizedBox(
+                  width: 86.w,
+                  height: 44.w,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        //  '',
+                        item.last_time == null
+                            ? ""
+                            : duTimeLineFormat(
+                                (item.last_time as Timestamp).toDate(),
+                              ),
+                        maxLines: 1,
+                        softWrap: false,
+                        style: TextStyle(
+                          fontFamily: "Avenir",
+                          fontWeight: FontWeight.normal,
 //                            color: AppColors.primaryElementText,
-                            color: AppColors.thirdElement,
-                            fontSize: 11.sp,
-                          ),
+                          color: AppColors.thirdElement,
+                          fontSize: 11.sp,
                         ),
-                        item.msg_num == 0
-                            ? Container()
-                            : Container(
-                                decoration: const BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                padding: EdgeInsets.only(
-                                  left: 4.w,
-                                  right: 4.w,
-                                ),
-                                child: Text(
-                                  "${item.msg_num}",
-                                  maxLines: 1,
-                                  softWrap: false,
-                                  style: TextStyle(
-                                    fontFamily: "Avenir",
-                                    fontWeight: FontWeight.normal,
-                                    color: AppColors.primaryElementText,
-                                    fontSize: 11.sp,
-                                  ),
+                      ),
+                      item.msg_num == 0
+                          ? Container()
+                          : Container(
+                              decoration: const BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              padding: EdgeInsets.only(
+                                left: 4.w,
+                                right: 4.w,
+                              ),
+                              child: Text(
+                                "${item.msg_num}",
+                                maxLines: 1,
+                                softWrap: false,
+                                style: TextStyle(
+                                  fontFamily: "Avenir",
+                                  fontWeight: FontWeight.normal,
+                                  color: AppColors.primaryElementText,
+                                  fontSize: 11.sp,
                                 ),
                               ),
-                      ],
-                    ),
+                            ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

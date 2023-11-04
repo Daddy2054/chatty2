@@ -120,9 +120,9 @@ class ChatController extends GetxController {
               // print('...newly added ${myInputController.text}');
             }
           case DocumentChangeType.modified:
-          // TODO: Handle this case.
+          // T ODO: Handle this case.
           case DocumentChangeType.removed:
-          // TODO: Handle this case.
+          // T ODO: Handle this case.
         }
       }
       for (var element in tempMsgList.reversed) {
