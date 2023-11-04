@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/entities/entities.dart';
 import '../../common/routes/routes.dart';
+import '../../common/utils/utils.dart';
 import '../../common/values/colors.dart';
 import 'index.dart';
 
@@ -194,17 +196,25 @@ class MessagePage extends GetView<MessageController> {
 
   Widget _chatListItem(Message item) {
     return Container(
-      padding: EdgeInsets.only(top: 10.h, left: 0.w, right: 0.w, bottom: 10.h,),
+      padding: EdgeInsets.only(
+        top: 10.h,
+        left: 0.w,
+        right: 0.w,
+        bottom: 10.h,
+      ),
       child: InkWell(
         onTap: () {
           if (item.doc_id != null) {
-            Get.toNamed("/chat", parameters: {
-              "doc_id": item.doc_id!,
-              "to_token": item.token!,
-              "to_name": item.name!,
-              "to_avatar": item.avatar!,
-              "to_online": item.online.toString(),
-            });
+            Get.toNamed(
+              "/chat",
+              parameters: {
+                "doc_id": item.doc_id!,
+                "to_token": item.token!,
+                "to_name": item.name!,
+                "to_avatar": item.avatar!,
+                "to_online": item.online.toString(),
+              },
+            );
           }
         },
         child: Row(
@@ -212,7 +222,11 @@ class MessagePage extends GetView<MessageController> {
             Container(
               width: 44.h,
               height: 44.h,
-              margin: EdgeInsets.only(top: 0.h, left: 0.w, right: 10.w,),
+              margin: EdgeInsets.only(
+                top: 0.h,
+                left: 0.w,
+                right: 10.w,
+              ),
               decoration: BoxDecoration(
                   color: AppColors.primarySecondaryBackground,
                   borderRadius: BorderRadius.all(Radius.circular(22.h)),
@@ -261,10 +275,11 @@ class MessagePage extends GetView<MessageController> {
                           maxLines: 1,
                           softWrap: false,
                           style: TextStyle(
-                              fontFamily: "Avenir",
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.thirdElement,
-                              fontSize: 14.sp,),
+                            fontFamily: "Avenir",
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.thirdElement,
+                            fontSize: 14.sp,
+                          ),
                         ),
                         Text(
                           "${item.last_msg}",
@@ -272,10 +287,11 @@ class MessagePage extends GetView<MessageController> {
                           maxLines: 1,
                           softWrap: false,
                           style: TextStyle(
-                              fontFamily: "Avenir",
-                              fontWeight: FontWeight.normal,
-                              color: AppColors.primarySecondaryElementText,
-                              fontSize: 12.sp,),
+                            fontFamily: "Avenir",
+                            fontWeight: FontWeight.normal,
+                            color: AppColors.primarySecondaryElementText,
+                            fontSize: 12.sp,
+                          ),
                         ),
                       ],
                     ),
@@ -288,16 +304,21 @@ class MessagePage extends GetView<MessageController> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          '',
-                          // item.last_time==null?""
-                          //     :duTimeLineFormat((item.last_time as Timestamp).toDate()),
+                          //  '',
+                          item.last_time == null
+                              ? ""
+                              : duTimeLineFormat(
+                                  (item.last_time as Timestamp).toDate(),
+                                ),
                           maxLines: 1,
                           softWrap: false,
                           style: TextStyle(
-                              fontFamily: "Avenir",
-                              fontWeight: FontWeight.normal,
-                              color: AppColors.primaryElementText,
-                              fontSize: 11.sp,),
+                            fontFamily: "Avenir",
+                            fontWeight: FontWeight.normal,
+//                            color: AppColors.primaryElementText,
+                            color: AppColors.thirdElement,
+                            fontSize: 11.sp,
+                          ),
                         ),
                         item.msg_num == 0
                             ? Container()
@@ -315,10 +336,11 @@ class MessagePage extends GetView<MessageController> {
                                   maxLines: 1,
                                   softWrap: false,
                                   style: TextStyle(
-                                      fontFamily: "Avenir",
-                                      fontWeight: FontWeight.normal,
-                                      color: AppColors.primaryElementText,
-                                      fontSize: 11.sp,),
+                                    fontFamily: "Avenir",
+                                    fontWeight: FontWeight.normal,
+                                    color: AppColors.primaryElementText,
+                                    fontSize: 11.sp,
+                                  ),
                                 ),
                               ),
                       ],
@@ -373,7 +395,7 @@ class MessagePage extends GetView<MessageController> {
                         : SliverToBoxAdapter(
                             child: Container(),
                           ),
-                  ), 
+                  ),
                 ],
               ),
               Positioned(
