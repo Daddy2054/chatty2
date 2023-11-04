@@ -61,43 +61,70 @@ class VideoCallController extends GetxController {
       appId: appId,
     ));
 
-    engine.registerEventHandler(RtcEngineEventHandler(
-        onError: (ErrorCodeType err, String msg) {
-      if (kDebugMode) {
-        print('[....onError] err: $err, ,msg:$msg');
-      }
-    }, onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-      if (kDebugMode) {
-        print('....onConnection ${connection.toJson()}');
-      }
-      state.isJoined.value = true;
-    }, onUserJoined:
-            (RtcConnection connection, int remoteUid, int elasped) async {
-      state.onRemoteUID.value = remoteUid;
-      //since the other user joined, don't show the avatar anymore
-      state.isShowAvatar.value = false;
-      await player.pause();
-      callTime();
-    }, onLeaveChannel: (RtcConnection connection, RtcStats stats) {
-      if (kDebugMode) {
-        print('...user left the room...');
-      }
-      state.isJoined.value = false;
-      state.onRemoteUID.value = 0;
-      state.isShowAvatar.value = true;
-    }, onRtcStats: (RtcConnection connection, RtcStats stats) {
-      if (kDebugMode) {
-        print("time....");
-        print(stats.duration);
-      }
-    }));
+    engine.registerEventHandler(
+      RtcEngineEventHandler(
+        onError: (
+          ErrorCodeType err,
+          String msg,
+        ) {
+          if (kDebugMode) {
+            print('[....onError] err: $err, ,msg:$msg');
+          }
+        },
+        onJoinChannelSuccess: (
+          RtcConnection connection,
+          int elapsed,
+        ) {
+          if (kDebugMode) {
+            print('....onConnection ${connection.toJson()}');
+          }
+          state.isJoined.value = true;
+        },
+        onUserJoined: (
+          RtcConnection connection,
+          int remoteUid,
+          int elasped,
+        ) async {
+          state.onRemoteUID.value = remoteUid;
+          //since the other user joined, don't show the avatar anymore
+          state.isShowAvatar.value = false;
+          await player.pause();
+          callTime();
+        },
+        onLeaveChannel: (
+          RtcConnection connection,
+          RtcStats stats,
+        ) {
+          if (kDebugMode) {
+            print('...user left the room...');
+          }
+          state.isJoined.value = false;
+          state.onRemoteUID.value = 0;
+          state.isShowAvatar.value = true;
+        },
+        onRtcStats: (
+          RtcConnection connection,
+          RtcStats stats,
+        ) {
+          if (kDebugMode) {
+            print("time....");
+            print(stats.duration);
+          }
+        },
+      ),
+    );
 
     await engine.enableVideo();
-    await engine.setVideoEncoderConfiguration(const VideoEncoderConfiguration(
-      dimensions: VideoDimensions(width: 640, height: 360),
-      frameRate: 15,
-      bitrate: 0,
-    ));
+    await engine.setVideoEncoderConfiguration(
+      const VideoEncoderConfiguration(
+        dimensions: VideoDimensions(
+          width: 640,
+          height: 360,
+        ),
+        frameRate: 15,
+        bitrate: 0,
+      ),
+    );
     await engine.startPreview();
     state.isReadyPreview.value = true;
     await joinChannel();
