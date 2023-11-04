@@ -194,7 +194,7 @@ class MessagePage extends GetView<MessageController> {
 
   Widget _chatListItem(Message item) {
     return Container(
-      padding: EdgeInsets.only(top: 10.h, left: 0.w, right: 0.w, bottom: 10.h),
+      padding: EdgeInsets.only(top: 10.h, left: 0.w, right: 0.w, bottom: 10.h,),
       child: InkWell(
         onTap: () {
           if (item.doc_id != null) {
@@ -203,7 +203,7 @@ class MessagePage extends GetView<MessageController> {
               "to_token": item.token!,
               "to_name": item.name!,
               "to_avatar": item.avatar!,
-              "to_online": item.online.toString()
+              "to_online": item.online.toString(),
             });
           }
         },
@@ -212,7 +212,7 @@ class MessagePage extends GetView<MessageController> {
             Container(
               width: 44.h,
               height: 44.h,
-              margin: EdgeInsets.only(top: 0.h, left: 0.w, right: 10.w),
+              margin: EdgeInsets.only(top: 0.h, left: 0.w, right: 10.w,),
               decoration: BoxDecoration(
                   color: AppColors.primarySecondaryBackground,
                   borderRadius: BorderRadius.all(Radius.circular(22.h)),
@@ -356,20 +356,24 @@ class MessagePage extends GetView<MessageController> {
                     ),
                   ),
                   SliverPadding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 0.w, horizontal: 20.w),
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0.w,
+                      horizontal: 20.w,
+                    ),
                     sliver: controller.state.tabStatus.value
                         ? SliverList(
-                            delegate:
-                                SliverChildBuilderDelegate((context, index) {
-                              var item = controller.state.msgList[index];
-                              return _chatListItem(item);
-                            }, childCount: controller.state.msgList.length),
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) {
+                                var item = controller.state.msgList[index];
+                                return _chatListItem(item);
+                              },
+                              childCount: controller.state.msgList.length,
+                            ),
                           )
                         : SliverToBoxAdapter(
                             child: Container(),
                           ),
-                  )
+                  ), 
                 ],
               ),
               Positioned(
