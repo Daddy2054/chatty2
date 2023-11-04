@@ -259,15 +259,16 @@ class VideoCallController extends GetxController {
   Future<void> addCallTime() async {
     var profile = UserStore.to.profile;
     var msgData = ChatCall(
-        from_token: profile.token,
-        to_token: state.to_token.value,
-        from_name: profile.name,
-        to_name: state.to_name.value,
-        from_avatar: profile.avatar,
-        to_avatar: state.to_avatar.value,
-        call_time: state.callTimeNum.value,
-        type: "video",
-        last_time: Timestamp.now());
+      from_token: profile.token,
+      to_token: state.to_token.value,
+      from_name: profile.name,
+      to_name: state.to_name.value,
+      from_avatar: profile.avatar,
+      to_avatar: state.to_avatar.value,
+      call_time: state.callTimeNum.value,
+      type: "video",
+      last_time: Timestamp.now(),
+    );
 
     await db
         .collection("chatcall")
@@ -284,10 +285,11 @@ class VideoCallController extends GetxController {
       return;
     }
     final content = Msgcontent(
-        token: profile_token,
-        content: sendContent,
-        type: "text",
-        addtime: Timestamp.now());
+      token: profile_token,
+      content: sendContent,
+      type: "text",
+      addtime: Timestamp.now(),
+    );
 
     await db
         .collection("message")
@@ -315,12 +317,14 @@ class VideoCallController extends GetxController {
         to_msg_num = to_msg_num + 1;
       }
 
-      await db.collection("message").doc(state.doc_id.value).update({
-        "to_msg_num": to_msg_num,
-        "from_msg_num": from_msg_num,
-        "last_msg": sendContent,
-        "last_time": Timestamp.now()
-      });
+      await db.collection("message").doc(state.doc_id.value).update(
+        {
+          "to_msg_num": to_msg_num,
+          "from_msg_num": from_msg_num,
+          "last_msg": sendContent,
+          "last_time": Timestamp.now()
+        },
+      );
     }
   }
 
