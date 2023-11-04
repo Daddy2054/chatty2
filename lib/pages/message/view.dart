@@ -264,7 +264,7 @@ class MessagePage extends GetView<MessageController> {
                               fontFamily: "Avenir",
                               fontWeight: FontWeight.bold,
                               color: AppColors.thirdElement,
-                              fontSize: 14.sp),
+                              fontSize: 14.sp,),
                         ),
                         Text(
                           "${item.last_msg}",
@@ -275,8 +275,8 @@ class MessagePage extends GetView<MessageController> {
                               fontFamily: "Avenir",
                               fontWeight: FontWeight.normal,
                               color: AppColors.primarySecondaryElementText,
-                              fontSize: 12.sp),
-                        )
+                              fontSize: 12.sp,),
+                        ),
                       ],
                     ),
                   ),
