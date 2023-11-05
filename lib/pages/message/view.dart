@@ -106,7 +106,7 @@ class MessagePage extends GetView<MessageController> {
     return Center(
       child: Container(
           height: 48,
-          width: 350,
+          width: 360,
           decoration: const BoxDecoration(
             color: AppColors.primarySecondaryBackground,
             borderRadius: BorderRadius.all(
@@ -156,7 +156,7 @@ class MessagePage extends GetView<MessageController> {
               GestureDetector(
                 onTap: () => controller.goTabStatus(),
                 child: Container(
-                  width: 155.w,
+                  width: 150.w,
                   height: 40.h,
                   decoration: controller.state.tabStatus.value
                       ? const BoxDecoration()

@@ -17,7 +17,7 @@ class Global {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     await Get.putAsync<StorageService>(() => StorageService().init());
-    // Get.put<ConfigStore>(ConfigStore());
+     Get.put<ConfigStore>(ConfigStore());
     Get.put<UserStore>(UserStore());
   }
 
