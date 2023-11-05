@@ -55,7 +55,7 @@ class ChatController extends GetxController {
     if (permissionStatus != PermissionStatus.granted) {
       var status = await permission.request();
       if (status != PermissionStatus.granted) {
-        toastInfo(msg: "Please enable permission have video call");
+        toastInfo(msg: "Please enable camera permission");
         if (GetPlatform.isAndroid) {
           await openAppSettings();
         }
