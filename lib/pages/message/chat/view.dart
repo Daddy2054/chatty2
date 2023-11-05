@@ -294,7 +294,9 @@ class ChatPage extends GetView<ChatController> {
                                 'assets/icons/video.png',
                               ),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              controller.videoCall();
+                            },
                           ),
                         ],
                       ),

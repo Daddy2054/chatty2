@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../common/apis/apis.dart';
 import '../../../common/entities/entities.dart';
@@ -47,6 +48,45 @@ class ChatController extends GetxController {
       'call_role': 'anchor',
       'doc_id': doc_id,
     });
+  }
+
+  Future<bool> requestPermission(Permission permission) async {
+    var permissionStatus = await permission.status;
+    if (permissionStatus != PermissionStatus.granted) {
+      var status = await permission.request();
+      if (status != PermissionStatus.granted) {
+        toastInfo(msg: "Please enable permission have video call");
+        if (GetPlatform.isAndroid) {
+          await openAppSettings();
+        }
+        return false;
+      }
+    }
+    return true;
+  }
+
+  void videoCall() async {
+    state.more_status.value = false;
+    bool micStatus = await requestPermission(Permission.microphone);
+    bool camStatus = await requestPermission(Permission.camera);
+
+    if (GetPlatform.isAndroid && micStatus && camStatus) {
+      Get.toNamed(AppRoutes.VideoCall, parameters: {
+        "to_token": state.to_token.value,
+        "to_name": state.to_name.value,
+        "to_avatar": state.to_avatar.value,
+        "call_role": "anchor",
+        "doc_id": doc_id,
+      });
+    } else {
+      Get.toNamed(AppRoutes.VideoCall, parameters: {
+        "to_token": state.to_token.value,
+        "to_name": state.to_name.value,
+        "to_avatar": state.to_avatar.value,
+        "call_role": "anchor",
+        "doc_id": doc_id,
+      });
+    }
   }
 
   @override
