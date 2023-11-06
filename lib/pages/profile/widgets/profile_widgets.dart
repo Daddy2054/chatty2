@@ -86,15 +86,19 @@ Widget buildCompleteBtn(ProfileController controller) {
       height: 44.h,
       margin: EdgeInsets.only(top: 60.h, bottom: 30.h),
       decoration: BoxDecoration(
-          color: AppColors.primaryElement,
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
-                spreadRadius: 1,
-                blurRadius: 2,
-                offset: const Offset(0, 1))
-          ]),
+        color: AppColors.primaryElement,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(5),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -220,10 +224,11 @@ Widget buildDescription(
 }
 
 Widget _profileTextField(
-    ProfileController controller,
-    TextEditingController textEditingController,
-    void Function(String value)? func,
-    String text) {
+  ProfileController controller,
+  TextEditingController textEditingController,
+  void Function(String value)? func,
+  String text,
+) {
   return TextField(
     onChanged: (value) => func!(value),
     controller: textEditingController,

@@ -3,6 +3,7 @@ import 'package:chatty/common/entities/entities.dart';
 import 'package:chatty/common/widgets/toast.dart';
 import 'package:chatty/pages/profile/state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -37,7 +38,9 @@ class ProfileController extends GetxController {
     }
     if (state.profile_detail.value.description == null ||
         state.profile_detail.value.description!.trim().isEmpty) {
-      toastInfo(msg: "Description can not be empty");
+      toastInfo(
+        msg: "Description can not be empty",
+      );
       return;
     }
 
@@ -47,14 +50,20 @@ class ProfileController extends GetxController {
     loginRequestEntity.name = userItem.name;
     loginRequestEntity.description = userItem.description;
     loginRequestEntity.online = userItem.online ?? 0;
-    print('online status ${loginRequestEntity.online}');
-    var result = await UserAPI.UpdateProfile(params: loginRequestEntity);
+    if (kDebugMode) {
+      print('online status ${loginRequestEntity.online}');
+    }
+    var result = await UserAPI.UpdateProfile(
+      params: loginRequestEntity,
+    );
     if (result.code == 0) {
       UserItem userItem = state.profile_detail.value;
       await UserStore.to.saveProfile(userItem);
       Get.back(result: 'finish');
     } else {
-      print('${result.msg}');
+      if (kDebugMode) {
+        print('${result.msg}');
+      }
     }
   }
 }
