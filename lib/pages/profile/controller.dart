@@ -60,10 +60,11 @@ class ProfileController extends GetxController {
       UserItem userItem = state.profile_detail.value;
       await UserStore.to.saveProfile(userItem);
       Get.back(result: 'finish');
-    } else {
       if (kDebugMode) {
         print('${result.msg}');
-    //    print('${result.data.toString()}');
+      }  } else {
+      if (kDebugMode) {
+        print('${result.msg}');
       }
     }
   }
