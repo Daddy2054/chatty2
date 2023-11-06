@@ -63,6 +63,7 @@ class ProfileController extends GetxController {
     } else {
       if (kDebugMode) {
         print('${result.msg}');
+    //    print('${result.data.toString()}');
       }
     }
   }
