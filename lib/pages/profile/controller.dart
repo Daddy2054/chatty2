@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chatty/common/apis/apis.dart';
 import 'package:chatty/common/entities/entities.dart';
 import 'package:chatty/common/widgets/toast.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../common/store/user.dart';
 
@@ -16,6 +19,9 @@ class ProfileController extends GetxController {
   final state = ProfileState();
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  File? _photo;
+  final ImagePicker _picker = ImagePicker();
+
   @override
   void onInit() {
     super.onInit();
@@ -23,6 +29,14 @@ class ProfileController extends GetxController {
     if (userItem != null) {
       state.profile_detail.value = userItem;
     }
+  }
+
+  @override
+  void onClose() {
+    debugPrint('being dleted');
+    nameController.dispose();
+    descriptionController.dispose();
+    super.onClose();
   }
 
   Future<void> goLogout() async {
@@ -62,10 +76,43 @@ class ProfileController extends GetxController {
       Get.back(result: 'finish');
       if (kDebugMode) {
         print('${result.msg}');
-      }  } else {
+      }
+    } else {
       if (kDebugMode) {
         print('${result.msg}');
       }
+    }
+  }
+
+  Future imgFromGallery() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      _photo = File(pickedFile.path);
+      //update upload a file
+      uploadFile();
+    } else {
+      debugPrint('No image selected');
+    }
+  }
+
+  Future imgFromCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      _photo = File(pickedFile.path);
+      //update upload a file
+      uploadFile();
+    } else {
+      debugPrint('No image selected');
+    }
+  }
+
+  Future uploadFile() async {
+    var result = await ChatAPI.upload_img(file: _photo);
+    if (result.code == 0) {
+      state.profile_detail.value.avatar = result.data;
+      state.profile_detail.refresh();
+    } else {
+      toastInfo(msg: 'image upload error');
     }
   }
 }
