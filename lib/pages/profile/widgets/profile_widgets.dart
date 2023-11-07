@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../common/values/colors.dart';
+import '../../../common/values/values.dart';
 import '../controller.dart';
 
 AppBar buildAppbar() {
@@ -83,7 +84,7 @@ Widget buildProfilePhoto(ProfileController controller, BuildContext context) {
   );
 }
 
-void _showPicker(BuildContext context, controller) {
+void _showPicker(BuildContext context, ProfileController controller) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) => SafeArea(

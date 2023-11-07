@@ -75,11 +75,11 @@ class ProfileController extends GetxController {
       await UserStore.to.saveProfile(userItem);
       Get.back(result: 'finish');
       if (kDebugMode) {
-        print('${result.msg}');
+        print(result.msg);
       }
     } else {
       if (kDebugMode) {
-        print('${result.msg}');
+        print(result.msg);
       }
     }
   }
@@ -90,6 +90,7 @@ class ProfileController extends GetxController {
       _photo = File(pickedFile.path);
       //update upload a file
       uploadFile();
+      goSave();
     } else {
       debugPrint('No image selected');
     }
@@ -111,6 +112,7 @@ class ProfileController extends GetxController {
     if (result.code == 0) {
       state.profile_detail.value.avatar = result.data;
       state.profile_detail.refresh();
+      debugPrint(result.data);
     } else {
       toastInfo(msg: 'image upload error');
     }

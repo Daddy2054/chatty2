@@ -11,36 +11,39 @@ class ProfilePage extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppbar(),
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  buildProfilePhoto(controller,context),
-                  buildName(
-                    controller,
-                    (value) {
-                      controller.state.profile_detail.value.name = value;
-                    },
-                    controller.state.profile_detail.value.name ?? "",
-                  ),
-                  buildDescription(
-                    controller,
-                    (value) {
-                      controller.state.profile_detail.value.description = value;
-                    },
-                    controller.state.profile_detail.value.description ??
-                        "Enter a description. ",
-                  ),
-                  buildCompleteBtn(controller),
-                  buildLogoutBtn(controller),
-                ],
+      body: Obx(
+        () => SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    buildProfilePhoto(controller, context),
+                    buildName(
+                      controller,
+                      (value) {
+                        controller.state.profile_detail.value.name = value;
+                      },
+                      controller.state.profile_detail.value.name ?? "",
+                    ),
+                    buildDescription(
+                      controller,
+                      (value) {
+                        controller.state.profile_detail.value.description =
+                            value;
+                      },
+                      controller.state.profile_detail.value.description ??
+                          "Enter a description. ",
+                    ),
+                    buildCompleteBtn(controller),
+                    buildLogoutBtn(controller),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

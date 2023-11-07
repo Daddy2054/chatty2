@@ -8,6 +8,7 @@ import '../../common/entities/entities.dart';
 import '../../common/routes/routes.dart';
 import '../../common/utils/utils.dart';
 import '../../common/values/colors.dart';
+import '../../common/values/values.dart';
 import 'index.dart';
 
 class MessagePage extends GetView<MessageController> {

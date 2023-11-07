@@ -22,6 +22,7 @@ class MessageController extends GetxController {
       AppRoutes.Profile,
       arguments: state.head_detail.value,
     );
+    getProfile();
   }
 
   goTabStatus() {
