@@ -141,6 +141,28 @@ class VoiceCallController extends GetxController {
     return '';
   }
 
+  Future<void> addCallTime() async {
+    var profile = UserStore.to.profile;
+    var metaData = ChatCall(
+      from_token: profile.token,
+      to_token: state.to_token.value,
+      from_name: profile.name,
+      to_name: state.to_name.value,
+      from_avatar: profile.avatar,
+      to_avatar: state.to_avatar.value,
+      call_time: state.callTime.value,
+      type: 'voice',
+      last_time: Timestamp.now(),
+    );
+    await db
+        .collection('chatcall')
+        .withConverter(
+          fromFirestore: ChatCall.fromFirestore,
+          toFirestore: (ChatCall msg, options) => msg.toFirestore(),
+        )
+        .add(metaData);
+  }
+
   Future<void> joinChannel() async {
     await Permission.microphone.request();
     EasyLoading.show(
@@ -155,7 +177,6 @@ class VoiceCallController extends GetxController {
       Get.back();
       return;
     }
-
     await engine.joinChannel(
       token: token,
       channelId: state.channelId.value,
@@ -182,6 +203,7 @@ class VoiceCallController extends GetxController {
   Future<void> _dispose() async {
     await player.pause();
     await engine.leaveChannel();
+    await addCallTime();
     await engine.release();
     await player.stop();
     super.dispose();
