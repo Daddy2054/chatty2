@@ -354,7 +354,7 @@ class MessagePage extends GetView<MessageController> {
     );
   }
 
- Widget _callListItem(CallMessage item) {
+  Widget _callListItem(CallMessage item) {
     return Container(
       padding: EdgeInsets.only(
         top: 10.h,
@@ -417,6 +417,7 @@ class MessagePage extends GetView<MessageController> {
                       ),
                     ),
             ),
+            //shows user name and profile photo and call time and duration
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -428,6 +429,7 @@ class MessagePage extends GetView<MessageController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //shows user name
                       Text(
                         "${item.name}",
                         overflow: TextOverflow.clip,
@@ -441,7 +443,8 @@ class MessagePage extends GetView<MessageController> {
                         ),
                       ),
                       Text(
-                        "${item.last_time}",
+                        //call duration
+                        "${item.call_time}",
                         overflow: TextOverflow.clip,
                         maxLines: 1,
                         softWrap: false,
@@ -463,7 +466,7 @@ class MessagePage extends GetView<MessageController> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        //  '',
+                        //  last call time,
                         item.last_time == null
                             ? ""
                             : duTimeLineFormat(
@@ -475,7 +478,7 @@ class MessagePage extends GetView<MessageController> {
                           fontFamily: "Avenir",
                           fontWeight: FontWeight.normal,
 //                            color: AppColors.primaryElementText,
-                          color: AppColors.thirdElement,
+                          color: AppColors.thirdElementText,
                           fontSize: 11.sp,
                         ),
                       ),
@@ -513,7 +516,6 @@ class MessagePage extends GetView<MessageController> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -537,30 +539,29 @@ class MessagePage extends GetView<MessageController> {
                     ),
                   ),
                   SliverPadding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 0.w,
-                      horizontal: 20.w,
-                    ),
-                    sliver: controller.state.tabStatus.value
-                        ? SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) {
-                                var item = controller.state.msgList[index];
-                                return _chatListItem(item);
-                              },
-                              childCount: controller.state.msgList.length,
-                            ),
-                          )
-                        : SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) {
-                                var item = controller.state.callList[index];
-                                return _callListItem(item);
-                              },
-                              childCount: controller.state.callList.length,
-                            ),
-                          )
-                  ),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 0.w,
+                        horizontal: 20.w,
+                      ),
+                      sliver: controller.state.tabStatus.value
+                          ? SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) {
+                                  var item = controller.state.msgList[index];
+                                  return _chatListItem(item);
+                                },
+                                childCount: controller.state.msgList.length,
+                              ),
+                            )
+                          : SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) {
+                                  var item = controller.state.callList[index];
+                                  return _callListItem(item);
+                                },
+                                childCount: controller.state.callList.length,
+                              ),
+                            )),
                 ],
               ),
               Positioned(
