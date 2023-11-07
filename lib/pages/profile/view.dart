@@ -19,7 +19,7 @@ class ProfilePage extends GetView<ProfileController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  buildProfilePhoto(controller),
+                  buildProfilePhoto(controller,context),
                   buildName(
                     controller,
                     (value) {

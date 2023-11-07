@@ -18,7 +18,7 @@ AppBar buildAppbar() {
   );
 }
 
-Widget buildProfilePhoto(ProfileController controller) {
+Widget buildProfilePhoto(ProfileController controller, BuildContext context) {
   return Stack(
     alignment: Alignment.center,
     children: [
@@ -58,21 +58,54 @@ Widget buildProfilePhoto(ProfileController controller) {
               ),
       ),
       Positioned(
-          bottom: 0.w,
-          right: 0.w,
-          height: 35.w,
-          child: GestureDetector(
-            child: Container(
-              height: 35.w,
-              width: 35.w,
-              padding: EdgeInsets.all(7.w),
-              decoration: BoxDecoration(
-                  color: AppColors.primaryElement,
-                  borderRadius: BorderRadius.all(Radius.circular(40.w))),
-              child: Image.asset("assets/icons/edit.png"),
+        bottom: 0.w,
+        right: 0.w,
+        height: 35.w,
+        child: GestureDetector(
+          onTap: () {
+            _showPicker(context, controller);
+          },
+          child: Container(
+            height: 35.w,
+            width: 35.w,
+            padding: EdgeInsets.all(7.w),
+            decoration: BoxDecoration(
+              color: AppColors.primaryElement,
+              borderRadius: BorderRadius.all(
+                Radius.circular(40.w),
+              ),
             ),
-          ))
+            child: Image.asset("assets/icons/edit.png"),
+          ),
+        ),
+      ),
     ],
+  );
+}
+
+void _showPicker(BuildContext context, controller) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) => SafeArea(
+      child: Wrap(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.photo_library),
+            title: const Text('Gallery'),
+            onTap: () {
+              controller.imgFromGallery();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.photo_camera),
+            title: const Text('Camera'),
+            onTap: () {
+              controller.imgFromCamera();
+            },
+          ),
+        ],
+      ),
+    ),
   );
 }
 
