@@ -23,7 +23,7 @@ class VoiceCallController extends GetxController {
   String appID = APPID;
   final db = FirebaseFirestore.instance;
   // ignore: non_constant_identifier_names
-  final profile_token = UserStore();
+  final profile_token = UserStore.to.profile.token;
   late final RtcEngine engine;
 
   @override
@@ -161,6 +161,56 @@ class VoiceCallController extends GetxController {
           toFirestore: (ChatCall msg, options) => msg.toFirestore(),
         )
         .add(metaData);
+    String sendContent = "Call time ${state.callTimeNum.value}【voice】";
+    saveMessage(sendContent);
+  }
+
+  saveMessage(String sendContent) async {
+    if (state.doc_id.value.isEmpty) {
+      return;
+    }
+    final content = Msgcontent(
+      token: profile_token,
+      content: sendContent,
+      type: "text",
+      addtime: Timestamp.now(),
+    );
+
+    await db
+        .collection("message")
+        .doc(state.doc_id.value)
+        .collection("msglist")
+        .withConverter(
+            fromFirestore: Msgcontent.fromFirestore,
+            toFirestore: (Msgcontent msgContent, options) =>
+                msgContent.toFirestore())
+        .add(content);
+    var messageRes = await db
+        .collection("message")
+        .doc(state.doc_id.value)
+        .withConverter(
+            fromFirestore: Msg.fromFirestore,
+            toFirestore: (Msg msgContent, options) => msgContent.toFirestore())
+        .get();
+    if (messageRes.data() != null) {
+      var item = messageRes.data()!;
+      int to_msg_num = item.to_msg_num == null ? 0 : item.to_msg_num!;
+      int from_msg_num = item.from_msg_num == null ? 0 : item.from_msg_num!;
+      if (item.from_token == profile_token) {
+        from_msg_num = from_msg_num + 1;
+      } else {
+        to_msg_num = to_msg_num + 1;
+      }
+
+      await db.collection("message").doc(state.doc_id.value).update(
+        {
+          "to_msg_num": to_msg_num,
+          "from_msg_num": from_msg_num,
+          "last_msg": sendContent,
+          "last_time": Timestamp.now()
+        },
+      );
+    }
   }
 
   Future<void> joinChannel() async {
