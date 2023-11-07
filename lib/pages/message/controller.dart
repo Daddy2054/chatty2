@@ -33,9 +33,80 @@ class MessageController extends GetxController {
     state.tabStatus.value = !state.tabStatus.value;
     if (state.tabStatus.value) {
       asyncLoadMsgData();
-    } else {}
+    } else {
+      asyncLoadCallData();
+    }
 
     EasyLoading.dismiss();
+  }
+
+  Future<void> asyncLoadCallData() async {
+    state.callList.clear();
+    var token = UserStore.to.profile.token;
+    var fromChatcall = await db
+        .collection("chatcall")
+        .withConverter(
+            fromFirestore: ChatCall.fromFirestore,
+            toFirestore: (ChatCall msg, options) => msg.toFirestore())
+        .where("from_token", isEqualTo: token)
+        .limit(30)
+        .get();
+
+    if (kDebugMode) {
+      print(fromChatcall.docs.length);
+    }
+    var toChatcall = await db
+        .collection("chatcall")
+        .withConverter(
+            fromFirestore: ChatCall.fromFirestore,
+            toFirestore: (ChatCall msg, options) => msg.toFirestore())
+        .where("to_token", isEqualTo: token)
+        .limit(30)
+        .get();
+
+    if (kDebugMode) {
+      print(toChatcall.docs.length);
+    }
+
+
+    if (fromChatcall.docs.isNotEmpty) {
+      await addChatcall(fromChatcall.docs);
+    }
+
+    if (toChatcall.docs.isNotEmpty) {
+      await addChatcall(toChatcall.docs);
+    }
+    state.msgList.sort((a, b) {
+      if (b.last_time == null) {
+        return 0;
+      }
+      if (a.last_time == null) {
+        return 0;
+      }
+      return b.last_time!.compareTo(a.last_time!);
+    });
+  }
+
+ addChatcall(List<QueryDocumentSnapshot<ChatCall>> data) {
+    for (var element in data) {
+      var item = element.data();
+      CallMessage message = CallMessage();
+      //saves the commom proterties
+      message.doc_id = element.id;
+      message.last_time = item.last_time;
+
+      message.call_time = item.call_time;
+      if (item.from_token == token) {
+        message.name = item.to_name;
+        message.avatar = item.to_avatar;
+        message.token = item.to_token;
+      } else {
+        message.name = item.from_name;
+        message.avatar = item.from_avatar;
+        message.token = item.from_token;
+      }
+      state.callList.add(message);
+    }
   }
 
   Future<void> asyncLoadMsgData() async {

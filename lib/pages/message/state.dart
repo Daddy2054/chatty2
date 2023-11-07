@@ -7,4 +7,5 @@ class MessageState {
   var head_detail = UserItem().obs;
   RxBool tabStatus = true.obs;
   RxList<Message> msgList = <Message>[].obs;
+  RxList<CallMessage> callList = <CallMessage>[].obs;
 }
